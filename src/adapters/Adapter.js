@@ -3,17 +3,14 @@ const API = 'http://localhost:3000/api/v1';
 class Adapter {
 
   static setToken(token) {
-    console.log("setToken()")
     localStorage.setItem("token", token)
   }
 
   static getToken() {
-    console.log("getToken()")
     return localStorage.getItem("token")
   }
 
   static deleteToken() {
-    console.log("deleteToken()")
     localStorage.removeItem("token")
   }
 
@@ -27,7 +24,6 @@ class Adapter {
         "auth": {"email": email, "password": password}
       })
     }).then(resp => {
-      console.log(resp)
       if (resp.ok) {
  				return resp.json()
  			} else {
@@ -45,7 +41,6 @@ class Adapter {
         }
       }
     ).then(resp => {
-      console.log(resp)
       if (resp.ok) {
         return resp.json()
       } else {
@@ -54,16 +49,18 @@ class Adapter {
     })
   }
 
-  // static currentUser() {
-  //   this.loginAuth(this.getToken()).then(resp => {
-  //     if (resp.ok) {
-  //       return resp.json()
-  //     }
-  //     else {
-  //       return false
-  //     }
-  //   });
-  // }
+  static fetchFilters() {
+    return fetch(`${API}/filters`)
+    .then(resp => {
+      if (resp.ok) {
+        return resp.json()
+      } else {
+        return false
+      }
+    })
+
+  }
+
 
 }
 

@@ -11,7 +11,11 @@ const Navbar = (props) => {
       {props.loggedIn
         ?
           <div>
+            <h4>Welcome {props.username}</h4>
             <NavLink to="/" exact>Home</NavLink><br/>
+            <NavLink to="/task" exact>Tasks</NavLink><br/>
+            <NavLink to="/analytics" exact>Analytics</NavLink><br/>
+            <NavLink to="/workflow" exact>Workflows</NavLink><br/>
             <button onClick={props.handleLogout}>Log Out</button>
           </div>
         : <Login

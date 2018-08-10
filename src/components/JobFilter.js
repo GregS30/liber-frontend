@@ -1,0 +1,22 @@
+import React from 'react';
+
+const JobFilter = (props) => {
+
+  return (
+    <div className="job-filter">
+      <label htmlFor="job-filter">Job: </label>
+      <select
+        name="job-filter"
+        value={props.selectedJob}
+        onChange={props.handleJobSelect}
+        >
+        {props.jobs.map(job =>
+            <option key={job.id}>{job.name}</option>
+        )}
+        </select>
+    </div>
+  )
+
+}
+
+export default JobFilter;

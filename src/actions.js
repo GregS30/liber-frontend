@@ -1,5 +1,11 @@
-import {STORE_USER, CLEAR_USER, LOGGED_IN} from './types';
+import {STORE_USER, CLEAR_USER, LOGGED_IN, STORE_FILTERS, IS_FETCHING} from './types';
 import Adapter from './adapters/Adapter';
+
+export function isFetching() {
+  return {
+    type: IS_FETCHING,
+   }
+}
 
 export function storeUser(json) {
   return {
@@ -26,6 +32,7 @@ export function login(email, password) {
       if (json) {
         Adapter.setToken(json.jwt)
         dispatch(storeLoggedIn())
+        dispatch(getCurrentUser())
         console.log('login ok')
       } else {
         Adapter.deleteToken()
@@ -43,6 +50,27 @@ export function getCurrentUser() {
         dispatch(storeUser(json))
       } else {
         dispatch(clearUser())
+      }
+    });
+  }
+}
+
+export function storeFilters(json) {
+  return {
+    type: STORE_FILTERS,
+    payload: json
+   }
+}
+
+export function getFilters() {
+  return (dispatch) => {
+    dispatch(isFetching)
+    Adapter.fetchFilters().then(json => {
+      if (json) {
+        dispatch(storeFilters(json))
+        console.log('getFilters() ok')
+      } else {
+        console.log('getFilters() failed')
       }
     });
   }

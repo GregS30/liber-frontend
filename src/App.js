@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import { withRouter } from 'react-router-dom';
+import { Route, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 // css
@@ -13,14 +13,20 @@ import Header from './components/Header.js';
 import Navbar from './components/Navbar.js';
 import Footer from './components/Footer.js';
 
+import TaskContainer from "./containers/TaskContainer.js";
+import WorkflowContainer from "./containers/WorkflowContainer.js";
+import AnalyticsContainer from "./containers/AnalyticsContainer.js";
+
 // actions
-import { storeUser, clearUser, getCurrentUser } from './actions';
+import { clearUser, getCurrentUser, getFilters } from './actions';
 
 class App extends Component {
 
   // auto-login - if token is present in LocalStorage
   componentDidMount() {
     this.props.getCurrentUser()
+    this.props.getFilters()
+    console.log("component did mount")
   }
 
   // these have to be in our reducer
@@ -32,17 +38,40 @@ class App extends Component {
   }
 
   render() {
-   console.log("App render", this.props)
+   console.log("App username", this.props.username)
     return (
       <div className="App">
           <Fragment>
             <div className="header-nav">
               <Header />
               <Navbar
+                username={this.props.username}
                 handleLogout={this.handleLogout}
                 loggedIn={this.props.loggedIn}
               />
             </div>
+            <div className="app-task">
+              <Route
+                exact path="/task"
+                render={() =>
+                  <TaskContainer />}
+              />
+            </div>
+            <div className="app-workflow">
+              <Route
+                exact path="/workflow"
+                render={() =>
+                  <WorkflowContainer />}
+              />
+            </div>
+            <div className="app-analytics">
+              <Route
+                exact path="/analytics"
+                render={() =>
+                  <AnalyticsContainer />}
+              />
+            </div>
+
           </Fragment>
         <Footer />
       </div>
@@ -56,14 +85,15 @@ const mapStateToProps = state => {
     username: state.username,
     userId: state.userId,
     loggedIn: state.loggedIn,
+    isFetching: state.isFetching,
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    storeUser: (username, userId) => dispatch(storeUser(username, userId)),
     clearUser: () => dispatch(clearUser()),
     getCurrentUser: () => dispatch(getCurrentUser()),
+    getFilters: () => dispatch(getFilters()),
   }
 }
 
