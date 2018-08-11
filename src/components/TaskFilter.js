@@ -10,7 +10,7 @@ const TaskFilter = (props) => {
         value={props.selectedTask}
         onChange={props.handleTaskSelect}
         >
-        {props.tasks.map(task =>
+        {props.taskNames.map(task =>
             <option key={task.id}>{task.name}</option>
         )}
         </select>

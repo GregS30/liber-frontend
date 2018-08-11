@@ -12,7 +12,9 @@ const initialState = {
   projects: [],
   clients: [],
   workflows: [],
-  tasks: [],
+  taskNames: [],
+  taskStates: [],
+  taskDates: [],  // this is an array of date values, not objects
   jobs: [],
 
 }
@@ -48,8 +50,10 @@ export default function reducer(state = initialState, action) {
         projects: action.payload.projects,
         clients: action.payload.clients,
         workflows: action.payload.workflows,
-        tasks: action.payload.tasks,
+        taskNames: action.payload.task_names,
+        taskStates: action.payload.task_states,
         jobs: action.payload.jobs,
+        taskDates: action.payload.task_dates,
         isFetching: false,
       }
 

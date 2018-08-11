@@ -4,9 +4,10 @@ import { connect } from 'react-redux';
 import Adapter from './../adapters/Adapter'
 
 import TaskFilter from "./../components/TaskFilter.js";
+import DateFilter from "./../components/DateFilter.js";
 import ProjectFilter from "./../components/ProjectFilter.js";
 import JobFilter from "./../components/JobFilter.js";
-
+import StateFilter from "./../components/StateFilter.js";
 
 import { } from '../actions';
 
@@ -17,8 +18,10 @@ class TaskFilterContainer extends Component {
       <Fragment>
         <div className="task-filter-container">
           <h4>TaskFilterContainer</h4>
-          <TaskFilter tasks={this.props.tasks} />
+          <DateFilter taskDates={this.props.taskDates} />
+          <TaskFilter taskNames={this.props.taskNames} />
           <ProjectFilter projects={this.props.projects} />
+          <StateFilter taskStates={this.props.taskStates} />
           <JobFilter jobs={this.props.jobs} />
         </div>
       </Fragment>
@@ -29,7 +32,9 @@ class TaskFilterContainer extends Component {
 const mapStateToProps = state => {
   return {
     projects: state.projects,
-    tasks: state.tasks,
+    taskNames: state.taskNames,
+    taskDates: state.taskDates,
+    taskStates: state.taskStates,
     jobs: state.jobs,
   }
 }

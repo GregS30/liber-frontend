@@ -11,7 +11,7 @@ const JobFilter = (props) => {
         onChange={props.handleJobSelect}
         >
         {props.jobs.map(job =>
-            <option key={job.id}>{job.name}</option>
+            <option key={job.id}>{job.job_num}</option>
         )}
         </select>
     </div>
