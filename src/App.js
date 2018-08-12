@@ -2,13 +2,10 @@ import React, { Component, Fragment } from 'react';
 import { Route, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-// css
 import './App.css';
 
-// adapters
 import Adapter from './adapters/Adapter';
 
-// components
 import Header from './components/Header.js';
 import Navbar from './components/Navbar.js';
 import Footer from './components/Footer.js';
@@ -17,19 +14,14 @@ import TaskContainer from "./containers/TaskContainer.js";
 import WorkflowContainer from "./containers/WorkflowContainer.js";
 import AnalyticsContainer from "./containers/AnalyticsContainer.js";
 
-// actions
 import { clearUser, getCurrentUser, getFilters } from './actions';
 
 class App extends Component {
 
-  // auto-login - if token is present in LocalStorage
   componentDidMount() {
     this.props.getCurrentUser()
     this.props.getFilters()
-    console.log("component did mount")
   }
-
-  // these have to be in our reducer
 
   handleLogout = () => {
     Adapter.deleteToken();
@@ -38,7 +30,7 @@ class App extends Component {
   }
 
   render() {
-   console.log("App username", this.props.username)
+   console.log("App container render()", this.props)
     return (
       <div className="App">
           <Fragment>
@@ -47,19 +39,18 @@ class App extends Component {
               <Navbar
                 username={this.props.username}
                 handleLogout={this.handleLogout}
-                loggedIn={this.props.loggedIn}
               />
             </div>
             <div className="app-task">
               <Route
-                exact path="/task"
+                exact path="/tasks"
                 render={() =>
                   <TaskContainer />}
               />
             </div>
             <div className="app-workflow">
               <Route
-                exact path="/workflow"
+                exact path="/workflows"
                 render={() =>
                   <WorkflowContainer />}
               />
@@ -83,9 +74,6 @@ class App extends Component {
 const mapStateToProps = state => {
   return {
     username: state.username,
-    userId: state.userId,
-    loggedIn: state.loggedIn,
-    isFetching: state.isFetching,
   }
 }
 

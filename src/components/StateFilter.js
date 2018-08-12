@@ -4,7 +4,7 @@ const StateFilter = (props) => {
 
   return (
     <div className="state-filter">
-      <label htmlFor="state-filter">State: </label>
+      <label htmlFor="state-filter">Status: </label>
       <select
         name="state-filter"
         value={props.selectedState}

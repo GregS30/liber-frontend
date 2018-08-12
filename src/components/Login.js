@@ -18,6 +18,7 @@ class Login extends Component {
   handleSubmit = (event) => {
     event.preventDefault();
     this.props.login(this.state.email, this.state.password)
+    // this.props.history.push('/task');
   }
 
   render() {

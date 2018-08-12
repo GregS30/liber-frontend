@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 
-import Adapter from './../adapters/Adapter'
+// import Adapter from './../adapters/Adapter'
 
 import ClientFilter from "./../components/ClientFilter.js";
 import ProjectFilter from "./../components/ProjectFilter.js";

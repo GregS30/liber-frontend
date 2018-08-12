@@ -1,4 +1,5 @@
-import {STORE_USER, CLEAR_USER, LOGGED_IN, STORE_FILTERS, IS_FETCHING} from './types';
+import {STORE_USER, CLEAR_USER, LOGGED_IN, STORE_FILTERS, IS_FETCHING, STORE_JOB_TASKS} from './types';
+
 import Adapter from './adapters/Adapter';
 
 export function isFetching() {
@@ -71,6 +72,27 @@ export function getFilters() {
         console.log('getFilters() ok')
       } else {
         console.log('getFilters() failed')
+      }
+    });
+  }
+}
+
+export function storeJobTasks(json) {
+  return {
+    type: STORE_JOB_TASKS,
+    payload: json
+   }
+}
+
+export function getJobTasks(startDate) {
+  return (dispatch) => {
+    dispatch(isFetching)
+    Adapter.fetchJobTasks(startDate).then(json => {
+      if (json) {
+        dispatch(storeJobTasks(json))
+        console.log('getJobTasks() ok')
+      } else {
+        console.log('getJobTasks() failed')
       }
     });
   }

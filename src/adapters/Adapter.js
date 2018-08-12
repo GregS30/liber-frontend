@@ -1,4 +1,4 @@
-const API = 'http://localhost:3000/api/v1';
+export const API = 'http://localhost:3000/api/v1';
 
 class Adapter {
 
@@ -58,10 +58,20 @@ class Adapter {
         return false
       }
     })
+  }
 
+  static fetchJobTasks(startDate) {
+    return fetch(`${API}/job_tasks?start_date=${startDate}`)
+    .then(resp => {
+      if (resp.ok) {
+        return resp.json()
+      } else {
+        return false
+      }
+    })
   }
 
 
-}
 
+}
 export default Adapter;
