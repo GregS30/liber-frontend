@@ -1,4 +1,4 @@
-import {STORE_USER, CLEAR_USER, LOGGED_IN, STORE_FILTERS, IS_FETCHING, STORE_TASKS, STORE_DATE_SELECT, STORE_USER_SELECT, STORE_PROJECT_SELECT, STORE_TASKNAME_SELECT, STORE_JOB_SELECT, STORE_STATUS_SELECT, STORE_FILTERED_TASKS} from './types';
+import {STORE_USER, CLEAR_USER, LOGGED_IN, STORE_FILTERS, IS_FETCHING, STORE_TASKS, STORE_DATE_SELECT, STORE_USER_SELECT, STORE_PROJECT_SELECT, STORE_TASKNAME_SELECT, STORE_JOB_SELECT, STORE_STATUS_SELECT, STORE_FILTERED_TASKS, STORE_CLIENT_SELECT, STORE_WORKFLOW_SELECT} from './types';
 
 const initialState = {
   // App
@@ -17,16 +17,21 @@ const initialState = {
   taskStatus: [],
   taskDates: [],  // this is an array of date values, not objects
   jobs: [],
+  users: [],
 
   tasks: [],
   filteredTasks: [],
 
   dateFilter: null,
-  taskNameFilter: null,
-  jobFilter: null,
-  projectFilter: null,
-  statusFilter: null,
-  userFilter: null,
+  taskNameFilter: "",
+  jobFilter: "",
+  projectFilter: "",
+  statusFilter: "",
+  userFilter: "",
+  clientFilter: "",
+  workflowFilter: "",
+
+  taskMetrics: null,
 
 }
 
@@ -59,18 +64,13 @@ export default function reducer(state = initialState, action) {
 
     case STORE_FILTERS:
       return { ...state,
-        projects: action.payload.projects,
-        projectFilter: action.payload.projects[0].name,
-        clients: action.payload.clients,
-        clientFilter: action.payload.clients[0].name,
-        workflows: action.payload.workflows,
-        workflowFilter: action.payload.workflows[0].name,
-        taskNames: action.payload.task_names,
-        taskNameFilter: action.payload.task_names[0].name,
-        taskStatus: action.payload.task_states,
-        statusFilter: action.payload.task_states[0].name,
-        jobs: action.payload.jobs,
-        jobFilter: action.payload.jobs[0].name,
+        projects: [{id: 0, name: ""}, ...action.payload.projects],
+        clients: [{id: 0, name: ""}, ...action.payload.clients],
+        workflows: [{id: 0, name: ""}, ...action.payload.workflows],
+        taskNames: [{id: 0, name: ""}, ...action.payload.task_names],
+        taskStatus: [{id: 0, name: ""}, ...action.payload.task_states],
+        jobs: [{id: 0, name: ""}, ...action.payload.jobs],
+        users: [{id: 0, name: ""}, ...action.payload.users],
         taskDates: action.payload.task_dates,
         dateFilter: action.payload.task_dates[action.payload.task_dates.length-1],
         isFetching: false,
@@ -81,6 +81,12 @@ export default function reducer(state = initialState, action) {
       return { ...state,
         tasks: action.payload,
         isFetching: false,
+        // clear filters when new list of tasks is fetched
+        taskNameFilter: "",
+        jobFilter: "",
+        projectFilter: "",
+        statusFilter: "",
+        userFilter: "",
       }
 
     case STORE_DATE_SELECT:
@@ -113,9 +119,20 @@ export default function reducer(state = initialState, action) {
         statusFilter: action.payload,
       }
 
+    case STORE_CLIENT_SELECT:
+      return { ...state,
+        clientFilter: action.payload,
+      }
+
+    case STORE_WORKFLOW_SELECT:
+      return { ...state,
+        workflowFilter: action.payload,
+      }
+
     case STORE_FILTERED_TASKS:
       return { ...state,
-        filteredTasks: action.payload,
+        filteredTasks: action.payload.tasks,
+        taskMetrics: action.payload.metrics,
       }
 
     default:

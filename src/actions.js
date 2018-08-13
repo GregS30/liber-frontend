@@ -1,4 +1,4 @@
-import {STORE_USER, CLEAR_USER, LOGGED_IN, STORE_FILTERS, IS_FETCHING, STORE_TASKS, STORE_DATE_SELECT, STORE_USER_SELECT, STORE_PROJECT_SELECT, STORE_TASKNAME_SELECT, STORE_JOB_SELECT, STORE_STATUS_SELECT, STORE_FILTERED_TASKS} from './types';
+import {STORE_USER, CLEAR_USER, LOGGED_IN, STORE_FILTERS, IS_FETCHING, STORE_TASKS, STORE_DATE_SELECT, STORE_USER_SELECT, STORE_PROJECT_SELECT, STORE_TASKNAME_SELECT, STORE_JOB_SELECT, STORE_STATUS_SELECT, STORE_FILTERED_TASKS, STORE_CLIENT_SELECT, STORE_WORKFLOW_SELECT} from './types';
 
 import Adapter from './adapters/Adapter';
 
@@ -84,11 +84,15 @@ export function storeTasks(json) {
    }
 }
 
-export function storeFilteredTasks(json) {
+export function storeFilteredTasks(json, metrics=null) {
+  console.log("metrics=", metrics)
   return {
     type: STORE_FILTERED_TASKS,
-    payload: json
-   }
+    payload: {
+      tasks: json,
+      metrics: metrics,
+    }
+  }
 }
 
 export function getTasks(startDate) {
@@ -146,4 +150,18 @@ export function storeStatusSelect(selectedStatus) {
     type: STORE_STATUS_SELECT,
     payload: selectedStatus
    }
+}
+
+export function storeClientSelect(selectedClient) {
+ return {
+   type: STORE_CLIENT_SELECT,
+   payload: selectedClient
+  }
+}
+
+export function storeWorkflowSelect(selectedWorkflow) {
+ return {
+   type: STORE_WORKFLOW_SELECT,
+   payload: selectedWorkflow
+  }
 }

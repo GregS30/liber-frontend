@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 
 import { } from '../actions';
 
-import WorkflowFilterContainer from "./WorkflowFilterContainer.js";
+import FilterContainer from "./FilterContainer.js";
 
 
 class WorkflowContainer extends Component {
@@ -15,8 +15,7 @@ class WorkflowContainer extends Component {
       <Fragment>
         <div className="workflow-container">
           <h3>WorkflowContainer</h3>
-            <WorkflowFilterContainer/>
-
+            <FilterContainer parent='workflow'/>
         </div>
       </Fragment>
     )

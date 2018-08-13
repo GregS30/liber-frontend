@@ -4,7 +4,7 @@ const DateFilter = (props) => {
   console.log("DateFilter", props)
   return (
     <div className="date-filter">
-      <label htmlFor="date-filter">Task Date: </label>
+      <label htmlFor="date-filter">Date: </label>
       <select
         name="date-filter"
         value={props.selectedDate}

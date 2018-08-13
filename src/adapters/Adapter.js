@@ -55,6 +55,7 @@ class Adapter {
       if (resp.ok) {
         return resp.json()
       } else {
+        console.log("%c Adapter.fetchFilters failed", 'color: red', resp.statusText)
         return false
       }
     })
@@ -66,6 +67,7 @@ class Adapter {
       if (resp.ok) {
         return resp.json()
       } else {
+        console.log("%c Adapter.fetchTasks failed", 'color: red', resp.statusText)
         return false
       }
     })

@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 
 import { } from '../actions';
 
-import AnalyticsFilterContainer from "./AnalyticsFilterContainer.js";
+import FilterContainer from "./FilterContainer.js";
 
 
 class AnalyticsContainer extends Component {
@@ -15,7 +15,7 @@ class AnalyticsContainer extends Component {
       <Fragment>
         <div className="analytics-container">
           <h3>AnalyticsContainer</h3>
-            <AnalyticsFilterContainer/>
+            <FilterContainer parent='analytics'/>
 
         </div>
       </Fragment>
