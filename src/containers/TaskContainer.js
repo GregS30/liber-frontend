@@ -3,16 +3,22 @@ import { connect } from 'react-redux';
 
 // import Adapter from './../adapters/Adapter'
 
-import { getJobTasks } from '../actions';
+import { getTasks } from '../actions';
 
 import TaskFilterContainer from "./TaskFilterContainer.js";
 
 class TaskContainer extends Component {
 
   componentDidMount() {
-    if (this.props.filterDate) {
-      // this.props.getJobTasks(this.props.filterDate)
-      this.props.getJobTasks('2015-09-28')  // testing only
+    if (this.props.dateFilter) {
+      this.props.getTasks(this.props.dateFilter)
+  //    this.props.getTasks('2015-09-28')  // testing only
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (this.props.dateFilter && this.props.dateFilter !== prevProps.dateFilter) {
+      this.props.getTasks(this.props.dateFilter)
     }
   }
 
@@ -21,7 +27,7 @@ class TaskContainer extends Component {
         <Fragment>
           <ol>
 
-        {this.props.jobTasks.map(jt => {
+        {this.props.tasks.map(jt => {
           return (
             <li key={jt.id}>
                 Workflow {jt.task.workflow.name}
@@ -48,8 +54,10 @@ class TaskContainer extends Component {
         <Fragment>
           <div className="task-container">
             <h3>TaskContainer</h3>
-              <TaskFilterContainer
-              />
+            {this.props.filtersLoaded
+              ? <TaskFilterContainer />
+              : null
+            }
             {this.renderTaskTiles()}
           </div>
         </Fragment>
@@ -60,14 +68,15 @@ class TaskContainer extends Component {
 const mapStateToProps = state => {
   return {
     isFetching: state.isFetching,
-    filterDate: state.filterDate,
-    jobTasks: state.jobTasks,
+    dateFilter: state.dateFilter,
+    tasks: state.tasks,
+    filtersLoaded: state.filtersLoaded
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    getJobTasks: (filterDate) => dispatch(getJobTasks(filterDate)),
+    getTasks: (dateFilter) => dispatch(getTasks(dateFilter)),
   }
 }
 

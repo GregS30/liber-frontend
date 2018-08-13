@@ -1,7 +1,7 @@
 import React from 'react';
 
 const DateFilter = (props) => {
-
+  console.log("DateFilter", props)
   return (
     <div className="date-filter">
       <label htmlFor="date-filter">Task Date: </label>

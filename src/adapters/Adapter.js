@@ -60,7 +60,7 @@ class Adapter {
     })
   }
 
-  static fetchJobTasks(startDate) {
+  static fetchTasks(startDate) {
     return fetch(`${API}/job_tasks?start_date=${startDate}`)
     .then(resp => {
       if (resp.ok) {

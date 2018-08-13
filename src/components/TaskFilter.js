@@ -7,8 +7,8 @@ const TaskFilter = (props) => {
       <label htmlFor="task-filter">Task: </label>
       <select
         name="task-filter"
-        value={props.selectedTask}
-        onChange={props.handleTaskSelect}
+        value={props.selectedTaskName}
+        onChange={props.handleTaskNameSelect}
         >
         {props.taskNames.map(task =>
             <option key={task.id}>{task.name}</option>

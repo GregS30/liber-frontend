@@ -1,4 +1,4 @@
-import {STORE_USER, CLEAR_USER, LOGGED_IN, STORE_FILTERS, IS_FETCHING, STORE_JOB_TASKS} from './types';
+import {STORE_USER, CLEAR_USER, LOGGED_IN, STORE_FILTERS, IS_FETCHING, STORE_TASKS, STORE_DATE_SELECT, STORE_USER_SELECT, STORE_PROJECT_SELECT, STORE_TASKNAME_SELECT, STORE_JOB_SELECT, STORE_STATUS_SELECT, STORE_FILTERED_TASKS} from './types';
 
 import Adapter from './adapters/Adapter';
 
@@ -77,23 +77,73 @@ export function getFilters() {
   }
 }
 
-export function storeJobTasks(json) {
+export function storeTasks(json) {
   return {
-    type: STORE_JOB_TASKS,
+    type: STORE_TASKS,
     payload: json
    }
 }
 
-export function getJobTasks(startDate) {
+export function storeFilteredTasks(json) {
+  return {
+    type: STORE_FILTERED_TASKS,
+    payload: json
+   }
+}
+
+export function getTasks(startDate) {
   return (dispatch) => {
     dispatch(isFetching)
-    Adapter.fetchJobTasks(startDate).then(json => {
+    Adapter.fetchTasks(startDate).then(json => {
       if (json) {
-        dispatch(storeJobTasks(json))
-        console.log('getJobTasks() ok')
+        dispatch(storeTasks(json))
+        dispatch(storeFilteredTasks(json))
+        console.log('getTasks() ok')
       } else {
-        console.log('getJobTasks() failed')
+        console.log('getTasks() failed')
       }
     });
   }
+}
+
+export function storeDateSelect(selectedDate) {
+  return {
+    type: STORE_DATE_SELECT,
+    payload: selectedDate
+   }
+}
+
+export function storeTaskNameSelect(selectedTaskName) {
+  return {
+    type: STORE_TASKNAME_SELECT,
+    payload: selectedTaskName
+   }
+}
+
+export function storeUserSelect(selectedUser) {
+  return {
+    type: STORE_USER_SELECT,
+    payload: selectedUser
+   }
+}
+
+export function storeProjectSelect(selectedProject) {
+  return {
+    type: STORE_PROJECT_SELECT,
+    payload: selectedProject
+   }
+}
+
+export function storeJobSelect(selectedJob) {
+  return {
+    type: STORE_JOB_SELECT,
+    payload: selectedJob
+   }
+}
+
+export function storeStatusSelect(selectedStatus) {
+  return {
+    type: STORE_STATUS_SELECT,
+    payload: selectedStatus
+   }
 }
