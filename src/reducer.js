@@ -1,4 +1,4 @@
-import {STORE_USER, CLEAR_USER, LOGGED_IN, STORE_FILTERS, IS_FETCHING, STORE_TASKS, STORE_DATE_SELECT, STORE_USER_SELECT, STORE_PROJECT_SELECT, STORE_TASKNAME_SELECT, STORE_JOB_SELECT, STORE_STATUS_SELECT, STORE_FILTERED_TASKS, STORE_CLIENT_SELECT, STORE_WORKFLOW_SELECT} from './types';
+import {STORE_USER, CLEAR_USER, LOGGED_IN, STORE_FILTERS, IS_FETCHING, STORE_TASKS, STORE_DATE_SELECT, STORE_USER_SELECT, STORE_PROJECT_SELECT, STORE_TASKNAME_SELECT, STORE_JOB_SELECT, STORE_STATUS_SELECT, STORE_FILTERED_TASKS, STORE_CLIENT_SELECT, STORE_WORKFLOW_SELECT, STORE_METRICS, CLEAR_FILTERS} from './types';
 
 const initialState = {
   // App
@@ -18,6 +18,7 @@ const initialState = {
   taskDates: [],  // this is an array of date values, not objects
   jobs: [],
   users: [],
+  periods: ['today', 'yesterday', 'this week', 'last week', 'this month', 'last month', 'this year', 'last year'],
 
   tasks: [],
   filteredTasks: [],
@@ -81,13 +82,23 @@ export default function reducer(state = initialState, action) {
       return { ...state,
         tasks: action.payload,
         isFetching: false,
-        // clear filters when new list of tasks is fetched
         taskNameFilter: "",
         jobFilter: "",
         projectFilter: "",
         statusFilter: "",
         userFilter: "",
       }
+
+    case CLEAR_FILTERS:
+    return { ...state,
+      dateFilter: state.taskDates[state.taskDates.length-1],
+      taskNameFilter: "",
+      jobFilter: "",
+      projectFilter: "",
+      statusFilter: "",
+      userFilter: "",
+    }
+
 
     case STORE_DATE_SELECT:
       return { ...state,
@@ -132,6 +143,10 @@ export default function reducer(state = initialState, action) {
     case STORE_FILTERED_TASKS:
       return { ...state,
         filteredTasks: action.payload.tasks,
+      }
+
+    case STORE_METRICS:
+      return { ...state,
         taskMetrics: action.payload.metrics,
       }
 

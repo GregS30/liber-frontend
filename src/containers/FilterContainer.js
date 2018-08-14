@@ -87,7 +87,7 @@ class FilterContainer extends Component {
           {this.props.parent === 'task'
           ? <UserFilter
             users={this.props.users}
-            selectedUser={this.props.jobFilter}
+            selectedUser={this.props.userFilter}
             handleUserSelect={this.handleUserSelect} />
           : null}
 

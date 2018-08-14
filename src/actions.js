@@ -1,4 +1,4 @@
-import {STORE_USER, CLEAR_USER, LOGGED_IN, STORE_FILTERS, IS_FETCHING, STORE_TASKS, STORE_DATE_SELECT, STORE_USER_SELECT, STORE_PROJECT_SELECT, STORE_TASKNAME_SELECT, STORE_JOB_SELECT, STORE_STATUS_SELECT, STORE_FILTERED_TASKS, STORE_CLIENT_SELECT, STORE_WORKFLOW_SELECT} from './types';
+import {STORE_USER, CLEAR_USER, LOGGED_IN, STORE_FILTERS, IS_FETCHING, STORE_TASKS, STORE_DATE_SELECT, STORE_USER_SELECT, STORE_PROJECT_SELECT, STORE_TASKNAME_SELECT, STORE_JOB_SELECT, STORE_STATUS_SELECT, STORE_FILTERED_TASKS, STORE_CLIENT_SELECT, STORE_WORKFLOW_SELECT, STORE_METRICS, CLEAR_FILTERS} from './types';
 
 import Adapter from './adapters/Adapter';
 
@@ -84,12 +84,20 @@ export function storeTasks(json) {
    }
 }
 
-export function storeFilteredTasks(json, metrics=null) {
-  console.log("metrics=", metrics)
+export function storeFilteredTasks(json) {
   return {
     type: STORE_FILTERED_TASKS,
     payload: {
       tasks: json,
+    }
+  }
+}
+
+export function storeMetrics(metrics) {
+  console.log("storeMetrics()", metrics)
+  return {
+    type: STORE_METRICS,
+    payload: {
       metrics: metrics,
     }
   }
@@ -108,6 +116,12 @@ export function getTasks(startDate) {
       }
     });
   }
+}
+
+export function clearFilters() {
+  return {
+    type: CLEAR_FILTERS,
+   }
 }
 
 export function storeDateSelect(selectedDate) {
