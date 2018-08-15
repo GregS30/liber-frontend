@@ -14,7 +14,7 @@ import TaskContainer from "./containers/TaskContainer.js";
 import WorkflowContainer from "./containers/WorkflowContainer.js";
 import AnalyticsContainer from "./containers/AnalyticsContainer.js";
 
-import { clearUser, clearFilters, getCurrentUser, getFilters } from './actions';
+import { clearUser, clearState, getCurrentUser, getFilters } from './actions';
 
 class App extends Component {
 
@@ -26,7 +26,7 @@ class App extends Component {
   handleLogout = () => {
     Adapter.deleteToken();
     this.props.clearUser();
-    this.props.clearFilters();
+    this.props.clearState();
     this.props.history.push('/');
   }
 
@@ -81,7 +81,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     clearUser: () => dispatch(clearUser()),
-    clearFilters: () => dispatch(clearFilters()),
+    clearState: () => dispatch(clearState()),
     getCurrentUser: () => dispatch(getCurrentUser()),
     getFilters: () => dispatch(getFilters()),
   }

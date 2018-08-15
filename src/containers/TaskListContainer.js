@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
+import TaskListItem from "../components/TaskListItem.js";
+
 import { storeFilteredTasks } from '../actions';
 
 class TaskListContainer extends Component {
@@ -44,15 +46,7 @@ class TaskListContainer extends Component {
         <ol>
         {this.props.filteredTasks.map(jt => {
           return (
-            <li key={jt.id}>
-              Workflow {jt.task.workflow.name}
-              Job# {jt.job.job_num}
-              Scanner {jt.scanner.name}
-              Task {jt.task.task_name.name}
-              User {jt.user.username}
-              Status {jt.task_state.name}
-              Duration {jt.duration}
-            </li>
+            <TaskListItem key={jt.id} item={jt} />
           )
         })}
         </ol>

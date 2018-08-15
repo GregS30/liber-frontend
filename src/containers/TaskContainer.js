@@ -11,15 +11,37 @@ class TaskContainer extends Component {
 
   componentDidMount() {
     // console.log("componendDidMount")
+    //    this.props.getTasks('2015-09-28')  // testing only
+
+
+//    this.setupInterval()
+
+
     if (this.props.dateFilter) {
       this.props.getTasks(this.props.dateFilter)
-  //    this.props.getTasks('2015-09-28')  // testing only
     }
   }
 
   componentDidUpdate(prevProps, prevState) {
     // console.log("componendDidUpdate")
     if (this.props.dateFilter !== prevProps.dateFilter) {
+      this.props.getTasks(this.props.dateFilter)
+    }
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.interval)
+  }
+
+  setupInterval = () => {
+    this.interval = setInterval(() => {
+      this.refreshTasks()
+    }, 10000)
+  }
+
+  refreshTasks = () => {
+    console.log("refreshTasks()")
+    if (this.props.dateFilter === 'Today') {
       this.props.getTasks(this.props.dateFilter)
     }
   }

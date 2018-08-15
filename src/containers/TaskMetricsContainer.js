@@ -8,19 +8,19 @@ import { storeMetrics } from '../actions';
 class TaskMetricsContainer extends Component {
 
   componentDidMount() {
-    console.log("componendDidMount")
+    // console.log("componendDidMount")
       this.props.storeMetrics(this.getMetrics())
   }
 
   componentDidUpdate(prevProps, prevState) {
-    console.log("componendDidUpdate")
+    // console.log("componendDidUpdate")
     if (this.props.filteredTasks !== prevProps.filteredTasks) {
       this.props.storeMetrics(this.getMetrics())
     }
   }
 
   getMetrics = (tasks) => {
-    console.log("getMetrics()")
+    // console.log("getMetrics()")
     return ({
       tasks: this.props.filteredTasks.length,
       jobs: [...new Set(this.props.filteredTasks.map(t => t.job.job_num))].length,
@@ -33,7 +33,7 @@ class TaskMetricsContainer extends Component {
   }
 
   render() {
-    console.log("TaskMetricsContainer render", this.props)
+    // console.log("TaskMetricsContainer render", this.props)
     return (
         <Fragment>
           <div className="task-list-container">

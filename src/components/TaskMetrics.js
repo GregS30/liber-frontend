@@ -17,7 +17,6 @@ const TaskMetrics = (props) => {
     }
     </div>
   )
-
 }
 
 export default TaskMetrics;

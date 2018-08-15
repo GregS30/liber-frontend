@@ -1,4 +1,4 @@
-import {STORE_USER, CLEAR_USER, LOGGED_IN, STORE_FILTERS, IS_FETCHING, STORE_TASKS, STORE_DATE_SELECT, STORE_USER_SELECT, STORE_PROJECT_SELECT, STORE_TASKNAME_SELECT, STORE_JOB_SELECT, STORE_STATUS_SELECT, STORE_FILTERED_TASKS, STORE_CLIENT_SELECT, STORE_WORKFLOW_SELECT, STORE_METRICS, CLEAR_FILTERS} from './types';
+import {STORE_USER, CLEAR_USER, LOGGED_IN, STORE_FILTERS, IS_FETCHING, STORE_TASKS, STORE_DATE_SELECT, STORE_USER_SELECT, STORE_PROJECT_SELECT, STORE_TASKNAME_SELECT, STORE_JOB_SELECT, STORE_STATUS_SELECT, STORE_FILTERED_TASKS, STORE_CLIENT_SELECT, STORE_WORKFLOW_SELECT, STORE_METRICS, CLEAR_STATE} from './types';
 
 const initialState = {
   // App
@@ -72,8 +72,11 @@ export default function reducer(state = initialState, action) {
         taskStatus: [{id: 0, name: ""}, ...action.payload.task_states],
         jobs: [{id: 0, name: ""}, ...action.payload.jobs],
         users: [{id: 0, name: ""}, ...action.payload.users],
-        taskDates: action.payload.task_dates,
-        dateFilter: action.payload.task_dates[action.payload.task_dates.length-1],
+        // kludge in Today, Yesterday -- see CLEAR_STATE below also
+        taskDates: ['Today', 'Yesterday'],
+        dateFilter: 'Today',
+        // taskDates: action.payload.task_dates,
+        // dateFilter: action.payload.task_dates[action.payload.task_dates.length-1],
         isFetching: false,
         filtersLoaded: true,
       }
@@ -89,14 +92,17 @@ export default function reducer(state = initialState, action) {
         userFilter: "",
       }
 
-    case CLEAR_FILTERS:
+    case CLEAR_STATE:
     return { ...state,
-      dateFilter: state.taskDates[state.taskDates.length-1],
+      dateFilter: 'Today',
+//      dateFilter: state.taskDates[state.taskDates.length-1],
       taskNameFilter: "",
       jobFilter: "",
       projectFilter: "",
       statusFilter: "",
       userFilter: "",
+      tasks: [],
+      filteredTasks: [],
     }
 
 

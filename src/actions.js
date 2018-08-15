@@ -1,4 +1,4 @@
-import {STORE_USER, CLEAR_USER, LOGGED_IN, STORE_FILTERS, IS_FETCHING, STORE_TASKS, STORE_DATE_SELECT, STORE_USER_SELECT, STORE_PROJECT_SELECT, STORE_TASKNAME_SELECT, STORE_JOB_SELECT, STORE_STATUS_SELECT, STORE_FILTERED_TASKS, STORE_CLIENT_SELECT, STORE_WORKFLOW_SELECT, STORE_METRICS, CLEAR_FILTERS} from './types';
+import {STORE_USER, CLEAR_USER, LOGGED_IN, STORE_FILTERS, IS_FETCHING, STORE_TASKS, STORE_DATE_SELECT, STORE_USER_SELECT, STORE_PROJECT_SELECT, STORE_TASKNAME_SELECT, STORE_JOB_SELECT, STORE_STATUS_SELECT, STORE_FILTERED_TASKS, STORE_CLIENT_SELECT, STORE_WORKFLOW_SELECT, STORE_METRICS, CLEAR_STATE} from './types';
 
 import Adapter from './adapters/Adapter';
 
@@ -104,6 +104,8 @@ export function storeMetrics(metrics) {
 }
 
 export function getTasks(startDate) {
+  // kludge dates to avoid having to deal with updating test data every day to make sure we have activity for yesterday and today - there are only 2 possible values Yesterday and Today
+  startDate = (startDate === 'Today' ? '2018-08-15' : '2017-06-15')
   return (dispatch) => {
     dispatch(isFetching)
     Adapter.fetchTasks(startDate).then(json => {
@@ -118,9 +120,9 @@ export function getTasks(startDate) {
   }
 }
 
-export function clearFilters() {
+export function clearState() {
   return {
-    type: CLEAR_FILTERS,
+    type: CLEAR_STATE,
    }
 }
 
