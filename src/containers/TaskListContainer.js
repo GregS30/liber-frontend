@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 
 import TaskListItem from "../components/TaskListItem.js";
@@ -42,15 +42,18 @@ class TaskListContainer extends Component {
   render() {
     // console.log("TaskListContainer render", this.props)
     return (
-      <div className="task-list-container">
-        <ol>
-        {this.props.filteredTasks.map(jt => {
-          return (
-            <TaskListItem key={jt.id} item={jt} />
-          )
-        })}
-        </ol>
-      </div>
+      <Fragment>
+        <div className="task-list">
+          <h3>Tasks</h3>
+            <ol>
+          {this.props.filteredTasks.map(jt => {
+            return (
+              <TaskListItem key={jt.id} item={jt} />
+            )
+          })}
+          </ol>
+        </div>
+      </Fragment>
     )
   }
 }

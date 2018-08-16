@@ -1,17 +1,18 @@
 import React from 'react';
 
-const Header = () => {
+import Navbar from '../components/Navbar.js';
+
+const Header = (props) => {
 
   return (
-    <div className="header">
-      <div className="header-logo">
-      </div>
-      <div className="header-text">
-        <h1>Liber Alchemy Supervisor</h1>
-      </div>
-    </div>
+    <header className="masthead" role="banner">
+      <h1>Liber Alchemy, Inc.</h1>
+        <Navbar
+          handleLogout={props.handleLogout}
+        />
+        <h3>Welcome {props.username.toUpperCase()}</h3>
+    </header>
   )
-
 }
 
 export default Header;

@@ -3,8 +3,8 @@ import React from 'react';
 const StatusFilter = (props) => {
 
   return (
-    <div className="state-filter">
-      <label htmlFor="state-filter">Status: </label>
+    <div classname="filter">
+      <label className="filter-label" htmlFor="state-filter">Status: </label>
       <select
         name="state-filter"
         value={props.selectedStatus}

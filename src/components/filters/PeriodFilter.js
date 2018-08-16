@@ -3,8 +3,8 @@ import React from 'react';
 const PeriodFilter = (props) => {
   console.log("PeriodFilter", props)
   return (
-    <div className="period-filter">
-      <label htmlFor="period-filter">Period: </label>
+    <div classname="filter">
+      <label className="filter-label" htmlFor="period-filter">Period: </label>
       <select
         name="period-filter"
         value={props.selectedPeriod}

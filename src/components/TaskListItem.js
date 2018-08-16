@@ -22,7 +22,7 @@ class TaskListItem extends Component {
     let status = 'open'
     let duration = 0
 
-    let now = moment()  
+    let now = moment()
     let start = moment(item.start_datetime);
     let finish = moment(item.end_datetime);
 
@@ -35,7 +35,7 @@ class TaskListItem extends Component {
       status = 'closed'
     }
     if (now > start && now < finish) {
-      status = 'running'
+      status = 'active'
     }
 
     let showDuration = null;
@@ -44,23 +44,19 @@ class TaskListItem extends Component {
 
     let showStatus = <div><label> [status] </label> {status}</div>
 
-    if (item.id === 227) {
-      debugger
-    }
-
-
-
     return (
       <li>
         <Fragment>
-          {showStart}
-          <div><label> [project] </label> {item.task.workflow.project.name}</div>
-          <div><label> [job] </label> {item.job.job_num}</div>
-          <div><label> [user] </label> {item.user.username}</div>
-          <div><label> [task] </label> {item.task.task_name.name}</div>
-          {showScanner}
-          {showStatus}
-          {showDuration}
+          <div className="task-item">
+            {showStart}
+            <div><label> [project] </label> {item.task.workflow.project.name}</div>
+            <div><label> [job] </label> {item.job.job_num}</div>
+            <div><label> [user] </label> {item.user.username}</div>
+            <div><label> [task] </label> {item.task.task_name.name}</div>
+            {showScanner}
+            {showStatus}
+            {showDuration}
+          </div>
         </Fragment>
       </li>
     )

@@ -104,8 +104,7 @@ export function storeMetrics(metrics) {
 }
 
 export function getTasks(startDate) {
-  // kludge dates to avoid having to deal with updating test data every day to make sure we have activity for yesterday and today - there are only 2 possible values Yesterday and Today
-  startDate = (startDate === 'Today' ? '2018-08-15' : '2017-06-15')
+  startDate = (startDate === 'Today' ? '2018-08-16' : '2017-06-15')
   return (dispatch) => {
     dispatch(isFetching)
     Adapter.fetchTasks(startDate).then(json => {

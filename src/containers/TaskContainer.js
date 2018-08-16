@@ -51,12 +51,13 @@ class TaskContainer extends Component {
     return (
         <Fragment>
           <div className="task-container">
-            <h3>TaskContainer</h3>
-            {this.props.filtersLoaded
-              ? <FilterContainer parent={'task'}/>
-              : null
-            }
-            <TaskMetricsContainer />
+            <div className="task-sidebar">
+              {this.props.filtersLoaded
+                ? <FilterContainer parent={'task'}/>
+                : null
+              }
+              <TaskMetricsContainer />
+            </div>
             <TaskListContainer />
           </div>
         </Fragment>

@@ -7,7 +7,6 @@ import './App.css';
 import Adapter from './adapters/Adapter';
 
 import Header from './components/Header.js';
-import Navbar from './components/Navbar.js';
 import Footer from './components/Footer.js';
 
 import TaskContainer from "./containers/TaskContainer.js";
@@ -33,41 +32,39 @@ class App extends Component {
   render() {
    console.log("App container render()", this.props)
     return (
-      <div className="App">
-          <Fragment>
-            <div className="header-nav">
-              <Header />
-              <Navbar
-                username={this.props.username}
-                handleLogout={this.handleLogout}
-              />
-            </div>
-            <div className="app-task">
-              <Route
-                exact path="/tasks"
-                render={() =>
-                  <TaskContainer />}
-              />
-            </div>
-            <div className="app-workflow">
-              <Route
-                exact path="/workflows"
-                render={() =>
-                  <WorkflowContainer />}
-              />
-            </div>
-            <div className="app-analytics">
-              <Route
-                exact path="/analytics"
-                render={() =>
-                  <AnalyticsContainer />}
-              />
-            </div>
+      <div className="page">
+        <Header username={this.props.username}
+                handleLogout={this.handleLogout}/>
+        <div className="container">
 
-          </Fragment>
-        <Footer />
+          <main role="main">
+            <Fragment>
+               <Route
+                 exact path="/tasks"
+                 render={() =>
+                   <TaskContainer />}
+               />
+               <Route
+                 exact path="/workflows"
+                 render={() =>
+                   <WorkflowContainer />}
+               />
+               <Route
+                 exact path="/analytics"
+                 render={() =>
+                   <AnalyticsContainer />}
+               />
+           </Fragment>
+          </main>
+
+        </div>
+
+        {/* === FOOTER ===*/}
+        <footer className="footer">
+          <Footer />
+        </footer>
       </div>
-    );
+      );
   }
 }
 

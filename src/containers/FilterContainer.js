@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import TaskFilter from "./../components/filters/TaskFilter.js";
@@ -38,68 +38,66 @@ class FilterContainer extends Component {
 
   render() {
     return (
-      <Fragment>
-        <div className="task-filter-container">
-          <h4>FilterContainer</h4>
+      <div className="filters-container">
+        <h3>Filters</h3>
 
-          {this.props.parent === 'task'
-          ? <DateFilter
-            taskDates={this.props.dates}
-            selectedDate={this.props.dateFilter}
-            handleDateSelect={this.handleDateSelect} />
-          : null}
+        {this.props.parent === 'task'
+        ? <DateFilter
+          taskDates={this.props.dates}
+          selectedDate={this.props.dateFilter}
+          handleDateSelect={this.handleDateSelect} />
+        : null}
 
-          {this.props.parent === 'task'
-          ? <TaskFilter
-            taskNames={this.props.taskNames}
-            selectedTaskName={this.props.taskNameFilter}
-            handleTaskNameSelect={this.handleTaskNameSelect} />
-          : null}
+        {this.props.parent === 'task'
+        ? <TaskFilter
+          taskNames={this.props.taskNames}
+          selectedTaskName={this.props.taskNameFilter}
+          handleTaskNameSelect={this.handleTaskNameSelect} />
+        : null}
 
-          {this.props.parent === 'analytics' || this.props.parent === 'workflow'
-          ? <ClientFilter
-            clients={this.props.clients}
-            selectedClient={this.props.clientFilter}
-            handleClientSelect={this.handleClientSelect} />
-          : null}
+        {this.props.parent === 'analytics' || this.props.parent === 'workflow'
+        ? <ClientFilter
+          clients={this.props.clients}
+          selectedClient={this.props.clientFilter}
+          handleClientSelect={this.handleClientSelect} />
+        : null}
 
-          {this.props.parent === 'task' || this.props.parent === 'workflow' || this.props.parent === 'analytics'
-          ? <ProjectFilter
-            projects={this.props.projects}
-            selectedProject={this.props.projectFilter}
-            handleProjectSelect={this.handleProjectSelect} />
-          : null}
+        {this.props.parent === 'task' || this.props.parent === 'workflow' || this.props.parent === 'analytics'
+        ? <ProjectFilter
+          projects={this.props.projects}
+          selectedProject={this.props.projectFilter}
+          handleProjectSelect={this.handleProjectSelect} />
+        : null}
 
-          {this.props.parent === 'task'
-          ? <StatusFilter
-            taskStatus={this.props.status}
-            selectedStatus={this.props.statusFilter}
-            handleStatusSelect={this.handleStatusSelect} />
-          : null}
+        {this.props.parent === 'task'
+        ? <StatusFilter
+          taskStatus={this.props.status}
+          selectedStatus={this.props.statusFilter}
+          handleStatusSelect={this.handleStatusSelect} />
+        : null}
 
-          {this.props.parent === 'task'
-          ? <JobFilter
-            jobs={this.props.jobs}
-            selectedJob={this.props.jobFilter}
-            handleJobSelect={this.handleJobSelect} />
-          : null}
+        {this.props.parent === 'task'
+        ? <JobFilter
+          jobs={this.props.jobs}
+          selectedJob={this.props.jobFilter}
+          handleJobSelect={this.handleJobSelect} />
+        : null}
 
-          {this.props.parent === 'task'
-          ? <UserFilter
-            users={this.props.users}
-            selectedUser={this.props.userFilter}
-            handleUserSelect={this.handleUserSelect} />
-          : null}
+        {this.props.parent === 'task'
+        ? <UserFilter
+          users={this.props.users}
+          selectedUser={this.props.userFilter}
+          handleUserSelect={this.handleUserSelect} />
+        : null}
 
-          {this.props.parent === 'workflow'
-          ? <WorkflowFilter
-            workflows={this.props.workflows}
-            selectedWorkflow={this.props.workflowFilter}
-            handleWorkflowSelect={this.handleWorkflowSelect} />
-          : null}
+        {this.props.parent === 'workflow'
+        ? <WorkflowFilter
+          workflows={this.props.workflows}
+          selectedWorkflow={this.props.workflowFilter}
+          handleWorkflowSelect={this.handleWorkflowSelect} />
+        : null}
 
-        </div>
-      </Fragment>
+      </div>
     )
   }
 }

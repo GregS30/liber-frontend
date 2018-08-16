@@ -1,3 +1,46 @@
+body {
+  font-family: 'Lekton', sans-serif;
+}
+
+
+div.header-container {
+
+}
+.page {
+  margin: 0 auto;
+  width: 960px;
+}
+
+.nav-main li {
+  display: inline-block;
+}
+
+.nav-main a {
+  display: inline-block;
+  padding: .5em 1.15em .5em 1.4em;
+  text-transform: uppercase;
+}
+
+.task-sidebar {
+  float: left;
+  width: 220px;
+  margin-left: 1em;
+  margin-top: 1em;
+}
+
+.task-list {
+  float: right;
+  width: 700px;
+  margin-left: 1em;
+  margin-top: 1em;
+}
+
+.filter-label {
+  display: inline-block;
+  width: 5em;
+  text-align: left;
+}​
+
 .App {
   text-align: center;
 }

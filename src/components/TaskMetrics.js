@@ -3,16 +3,31 @@ import React from 'react';
 const TaskMetrics = (props) => {
 
   return (
-    <div className="task-metrics">
+    <div className="task-metrics-container">
     {props.metrics
       ?
-      <ul>
-        <li key='tasks'>{props.metrics.tasks} tasks</li>
-        <li key='jobs'>{props.metrics.jobs} jobs</li>
-        <li key='scanners'>{props.metrics.scanners} scanners</li>
-        <li key='operators'>{props.metrics.operators} operators</li>
-        <li key='projects'>{props.metrics.projects} projects</li>
-      </ul>
+      <table className="task-metrics-table">
+        <tr>
+          <td>Tasks</td>
+          <td align="right">{props.metrics.tasks}</td>
+        </tr>
+        <tr>
+          <td>Jobs</td>
+          <td align="right">{props.metrics.jobs}</td>
+        </tr>
+        <tr>
+          <td>Scanners</td>
+          <td align="right">{props.metrics.scanners}</td>
+        </tr>
+        <tr>
+          <td>Operators</td>
+          <td align="right">{props.metrics.operators}</td>
+        </tr>
+        <tr>
+          <td>Projects</td>
+          <td align="right">{props.metrics.projects}</td>
+        </tr>
+      </table>
       : null
     }
     </div>

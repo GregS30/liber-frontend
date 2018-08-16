@@ -3,8 +3,8 @@ import React from 'react';
 const ClientFilter = (props) => {
 
   return (
-    <div className="client-filter">
-      <label htmlFor="client-filter">Client: </label>
+    <div classname="filter">
+      <label className="filter-label" htmlFor="client-filter">Client: </label>
       <select
         name="client-filter"
         value={props.selectedClient}

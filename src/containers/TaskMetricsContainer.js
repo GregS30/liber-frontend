@@ -36,9 +36,8 @@ class TaskMetricsContainer extends Component {
     // console.log("TaskMetricsContainer render", this.props)
     return (
         <Fragment>
-          <div className="task-list-container">
-            <TaskMetrics metrics={this.props.taskMetrics}/>
-          </div>
+          <h3>Metrics</h3>
+          <TaskMetrics metrics={this.props.taskMetrics}/>
         </Fragment>
       )
   }
