@@ -3,7 +3,7 @@ import React from 'react';
 const ClientFilter = (props) => {
 
   return (
-    <div classname="filter">
+    <div className="filter">
       <label className="filter-label" htmlFor="client-filter">Client: </label>
       <select
         name="client-filter"

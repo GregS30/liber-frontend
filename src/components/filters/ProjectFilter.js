@@ -3,7 +3,7 @@ import React from 'react';
 const ProjectFilter = (props) => {
 
   return (
-    <div classname="filter">
+    <div className="filter">
       <label className="filter-label" htmlFor="project-filter">Project: </label>
       <select
         className="filter-select"

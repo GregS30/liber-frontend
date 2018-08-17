@@ -35,6 +35,13 @@ div.header-container {
   margin-top: 1em;
 }
 
+.task-item {
+  float: left;
+  width: 200px;
+  height: 120px;
+  padding: .5em .5em .5em .5em;
+}
+
 .filter-label {
   display: inline-block;
   width: 5em;

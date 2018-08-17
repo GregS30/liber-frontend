@@ -2,7 +2,7 @@ import React from 'react';
 
 const DateFilter = (props) => {
   return (
-    <div classname="filter">
+    <div className="filter">
     <label className="filter-label" htmlFor="date-filter">Date: </label>
     <select
       className="filter-select"

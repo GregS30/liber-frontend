@@ -3,7 +3,7 @@ import React from 'react';
 const UserFilter = (props) => {
 
   return (
-    <div classname="filter">
+    <div className="filter">
       <label className="filter-label" htmlFor="user-filter">User: </label>
       <select
         name="user-filter"

@@ -45,13 +45,11 @@ class TaskListContainer extends Component {
       <Fragment>
         <div className="task-list">
           <h3>Tasks</h3>
-            <ol>
           {this.props.filteredTasks.map(jt => {
             return (
               <TaskListItem key={jt.id} item={jt} />
             )
           })}
-          </ol>
         </div>
       </Fragment>
     )

@@ -4,29 +4,47 @@ import { connect } from 'react-redux';
 import moment from 'moment';
 
 class TaskListItem extends Component {
-  state = {
-    email: "",
-    password: "",
+
+  renderScanner = (task, scanner) => {
+    return (
+      task === 'scan'
+      ? <tr><td>Scanner</td><td align="right">{scanner}</td></tr>
+      : null
+    )
   }
 
-  renderItem = (item) => {
-    let showScanner;
+  renderUser = (user) => {
+    return (
+      <tr><td>User</td><td align="right">{user}</td></tr>
+    )
+  }
 
-    if (item.task.task_name.name === 'scan') {
-      showScanner = <div><label> [scanner] </label>{item.scanner.name}</div>
-    }
-    else {
-      showScanner = null
-    }
+  renderTask = (task) => {
+    return (
+      <tr><td>Task</td><td align="right">{task}</td></tr>
+    )
+  }
 
+  renderDuration = (start, finish) => {
+    let duration = finish.diff(start, 'seconds')
+    return (
+      <tr><td>Duration</td><td align="right">{duration}</td></tr>
+    )
+  }
+
+  renderStartTime = (startTime) => {
+    return (
+      <tr><td>Start</td><td align="right">{startTime.format('h:mm')}</td></tr>
+    )
+  }
+
+  renderJob = (job) => {
+    <tr><td>Job</td><td align="right">{job}</td></tr>
+  }
+
+  renderStatus = (start, finish) => {
     let status = 'open'
-    let duration = 0
-
     let now = moment()
-    let start = moment(item.start_datetime);
-    let finish = moment(item.end_datetime);
-
-    let showStart = <div><label> [start] </label> {start.format('h:mm')}</div>
 
     if (start > now) {
       status = 'pending'
@@ -38,27 +56,28 @@ class TaskListItem extends Component {
       status = 'active'
     }
 
-    let showDuration = null;
-    duration = finish.diff(start, 'seconds')
-    showDuration = <div><label> [duration] </label> {duration}</div>
-
-    let showStatus = <div><label> [status] </label> {status}</div>
-
     return (
-      <li>
-        <Fragment>
-          <div className="task-item">
-            {showStart}
-            <div><label> [project] </label> {item.task.workflow.project.name}</div>
-            <div><label> [job] </label> {item.job.job_num}</div>
-            <div><label> [user] </label> {item.user.username}</div>
-            <div><label> [task] </label> {item.task.task_name.name}</div>
-            {showScanner}
-            {showStatus}
-            {showDuration}
-          </div>
-        </Fragment>
-      </li>
+      <tr><td>Status</td><td align="right">{status}</td></tr>
+    )
+  }
+
+  renderItem = (item) => {
+    return (
+      <Fragment>
+        <div className="task-item">
+          <table>
+            <tbody>
+              {this.renderScanner(item.task.task_name.name, item.scanner.name)}
+              {this.renderStartTime(moment(item.start_datetime))}
+              {this.renderJob(item.job.job_num)}
+              {this.renderUser(item.user.username)}
+              {this.renderTask(item.task.task_name.name)}
+              {this.renderStatus(moment(item.start_datetime), moment(item.end_datetime))}
+              {this.renderDuration(moment(item.start_datetime), moment(item.end_datetime))}
+            </tbody>
+          </table>
+        </div>
+      </Fragment>
     )
   }
 

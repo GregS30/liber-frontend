@@ -3,7 +3,7 @@ import React from 'react';
 const WorkflowFilter = (props) => {
 
   return (
-    <div classname="filter">
+    <div className="filter">
       <label className="filter-label" htmlFor="workflow-filter">Workflow: </label>
       <select
         name="workflow-filter"

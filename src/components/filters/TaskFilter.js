@@ -3,7 +3,7 @@ import React from 'react';
 const TaskFilter = (props) => {
 
   return (
-    <div classname="filter">
+    <div className="filter">
       <label className="filter-label" htmlFor="task-filter">Task: </label>
       <select
         className="filter-select"

@@ -3,7 +3,7 @@ import React from 'react';
 const JobFilter = (props) => {
 
   return (
-    <div classname="filter">
+    <div className="filter">
       <label className="filter-label" htmlFor="job-filter">Job: </label>
       <select
         name="job-filter"
