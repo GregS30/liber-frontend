@@ -104,7 +104,7 @@ export function storeMetrics(metrics) {
 }
 
 export function getTasks(startDate) {
-  startDate = (startDate === 'Today' ? '2018-08-16' : '2017-06-15')
+  startDate = (startDate === 'Today' ? '2018-08-17' : '2017-06-15')
   return (dispatch) => {
     dispatch(isFetching)
     Adapter.fetchTasks(startDate).then(json => {
