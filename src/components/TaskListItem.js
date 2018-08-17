@@ -6,6 +6,13 @@ import moment from 'moment';
 const C1_WIDTH = '100px'
 const C2_WIDTH = '80px'
 const C2_ALIGN = 'right'
+const COLOR = ['#adebeb', '#b3e0ff', '#ccccff', '#b3ecff', '#ccddff', '#e6ccff', '#ffffb3', '#ffcce0', '#ffccff', '#ffc299', '#bbff99']
+const COLOR_STATUS_ACTIVE = '#ffff99'
+const COLOR_STATUS_CLOSED = 'silver'
+const COLOR_STATUS_HOLD = '#ff8080'
+const COLOR_STATUS_PENDING = 'white'
+const COLOR_SCAN = '#b3ccff'
+const COLOR_QA = '#e6ff99'
 
 //
 // var divStyle = {
@@ -22,7 +29,7 @@ class TaskListItem extends Component {
   renderScanner = (task, scanner) => {
     return (
       task === 'scan'
-      ? <tr><td style={{width: C1_WIDTH}} >{scanner}</td><td style={{width: C2_WIDTH, align: C2_ALIGN}}></td></tr>
+      ? <tr><td style={{width: C1_WIDTH}} >{scanner.toUpperCase()}</td><td style={{width: C2_WIDTH, align: C2_ALIGN}}></td></tr>
       : null
     )
   }
@@ -63,6 +70,12 @@ class TaskListItem extends Component {
   }
 
   renderStatus = (start, finish) => {
+    return (
+      <tr><td style={{width: C1_WIDTH}}>Status</td><td style={{width: C2_WIDTH, align: C2_ALIGN}}>{this.getStatus(start, finish)}</td></tr>
+    )
+  }
+
+  getStatus = (start, finish) => {
     let status = 'open'
     let now = moment()
 
@@ -76,16 +89,57 @@ class TaskListItem extends Component {
       status = 'active'
     }
 
-    return (
-      <tr><td style={{width: C1_WIDTH}}>Status</td><td style={{width: C2_WIDTH, align: C2_ALIGN}}>{status}</td></tr>
-    )
+    return status;
+  }
+
+  getColor = (task) => {
+
+    let taskStatus = this.getStatus(moment(task.start_datetime), moment(task.end_datetime))
+
+    switch(this.props.styleFilter) {
+
+      case 'default':
+
+        if (task.task.task_name.name === 'scan') {
+          return COLOR_SCAN
+        }
+        else if (task.task.task_name.name === 'qa') {
+          return COLOR_QA
+        }
+
+        switch(taskStatus) {
+          case 'active':
+            return COLOR_STATUS_ACTIVE
+          case 'closed':
+            return COLOR_STATUS_CLOSED
+          case 'hold':
+            return COLOR_STATUS_HOLD
+          case 'pending':
+            return COLOR_STATUS_PENDING
+        }
+
+      case 'user':
+        return COLOR[this.props.users.findIndex((user) => user.username === task.user.username)]
+
+      case 'status':
+        return COLOR[this.props.statuses.findIndex((status) => status.name === taskStatus)]
+
+      case 'task':
+        return COLOR[this.props.taskNames.findIndex((name) => name.name === task.task.task_name.name)]
+
+      default:
+        return COLOR[0];
+
+    }
+
   }
 
   renderItem = (item) => {
+    let backgroundColor = this.getColor(item)
     return (
       <Fragment>
         <div className="task-item">
-          <table style={{background: '#C0C0C0'}}>
+          <table style={{background: backgroundColor}}>
             <tbody>
               {this.renderScanner(item.task.task_name.name, item.scanner.name)}
               {this.renderStartTime(moment(item.start_datetime))}
@@ -108,6 +162,10 @@ class TaskListItem extends Component {
 
 const mapStateToProps = state => {
   return {
+    taskNames: state.taskNames,
+    statuses: state.taskStatus,
+    users: state.users,
+    styleFilter: state.styleFilter,
   }
 }
 

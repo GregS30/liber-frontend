@@ -9,8 +9,9 @@ import StatusFilter from "./../components/filters/StatusFilter.js";
 import UserFilter from "./../components/filters/UserFilter.js";
 import ClientFilter from "./../components/filters/ClientFilter.js";
 import WorkflowFilter from "./../components/filters/WorkflowFilter.js";
+import StyleFilter from "./../components/filters/StyleFilter.js";
 
-import { storeDateSelect, storeTaskNameSelect, storeProjectSelect, storeStatusSelect, storeJobSelect, storeUserSelect, storeClientSelect, storeWorkflowSelect } from '../actions';
+import { storeDateSelect, storeTaskNameSelect, storeProjectSelect, storeStatusSelect, storeJobSelect, storeUserSelect, storeClientSelect, storeWorkflowSelect, storeStyleSelect } from '../actions';
 
 class FilterContainer extends Component {
 
@@ -35,6 +36,9 @@ class FilterContainer extends Component {
 
   handleUserSelect = (event) =>
     this.props.storeUserSelect(event.target.value)
+
+  handleStyleSelect = (event) =>
+    this.props.storeStyleSelect(event.target.value)
 
   render() {
     return (
@@ -97,6 +101,14 @@ class FilterContainer extends Component {
           handleWorkflowSelect={this.handleWorkflowSelect} />
         : null}
 
+        {this.props.parent === 'task'
+        ? <StyleFilter
+          taskStyles={this.props.styles}
+          selectedStyle={this.props.styleFilter}
+          handleStyleSelect={this.handleStyleSelect} />
+        : null}
+
+
       </div>
     )
   }
@@ -104,6 +116,7 @@ class FilterContainer extends Component {
 
 const mapStateToProps = state => {
   return {
+    styles: state.styles,
     projects: state.projects,
     taskNames: state.taskNames,
     dates: state.taskDates,
@@ -134,6 +147,7 @@ const mapDispatchToProps = dispatch => {
     storeUserSelect: (selectedUser) => dispatch(storeUserSelect(selectedUser)),
     storeClientSelect: (selectedClient) => dispatch(storeClientSelect(selectedClient)),
     storeWorkflowSelect: (selectedWorkflow) => dispatch(storeWorkflowSelect(selectedWorkflow)),
+    storeStyleSelect: (selectedStyle) => dispatch(storeStyleSelect(selectedStyle)),
   }
 }
 

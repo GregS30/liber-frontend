@@ -4,9 +4,9 @@ const ClientFilter = (props) => {
 
   return (
     <div className="filter">
-      <label className="filter-label" htmlFor="client-filter">Client: </label>
+      <label className="filter-label" htmlFor="task-style-filter">Client: </label>
       <select
-        name="client-filter"
+        name="task-style-filter"
         value={props.selectedClient}
         onChange={props.handleClientSelect}
         >

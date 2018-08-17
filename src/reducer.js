@@ -1,4 +1,4 @@
-import {STORE_USER, CLEAR_USER, LOGGED_IN, STORE_FILTERS, IS_FETCHING, STORE_TASKS, STORE_DATE_SELECT, STORE_USER_SELECT, STORE_PROJECT_SELECT, STORE_TASKNAME_SELECT, STORE_JOB_SELECT, STORE_STATUS_SELECT, STORE_FILTERED_TASKS, STORE_CLIENT_SELECT, STORE_WORKFLOW_SELECT, STORE_METRICS, CLEAR_STATE} from './types';
+import {STORE_USER, CLEAR_USER, LOGGED_IN, STORE_FILTERS, IS_FETCHING, STORE_TASKS, STORE_DATE_SELECT, STORE_USER_SELECT, STORE_PROJECT_SELECT, STORE_TASKNAME_SELECT, STORE_JOB_SELECT, STORE_STATUS_SELECT, STORE_FILTERED_TASKS, STORE_CLIENT_SELECT, STORE_WORKFLOW_SELECT, STORE_METRICS, CLEAR_STATE, STORE_STYLE_SELECT} from './types';
 
 const initialState = {
   // App
@@ -19,6 +19,7 @@ const initialState = {
   jobs: [],
   users: [],
   periods: ['today', 'yesterday', 'this week', 'last week', 'this month', 'last month', 'this year', 'last year'],
+  styles: [{id: 1, name: 'default'}, {id: 2, name: 'user'}, {id: 3, name: 'task'}, {id: 4, name: 'status'}],
 
   tasks: [],
   filteredTasks: [],
@@ -31,6 +32,7 @@ const initialState = {
   userFilter: "",
   clientFilter: "",
   workflowFilter: "",
+  styleFilter: "default",
 
   taskMetrics: null,
 
@@ -155,6 +157,12 @@ export default function reducer(state = initialState, action) {
       return { ...state,
         taskMetrics: action.payload.metrics,
       }
+
+    case STORE_STYLE_SELECT:
+      return { ...state,
+        styleFilter: action.payload,
+      }
+
 
     default:
       return state;
