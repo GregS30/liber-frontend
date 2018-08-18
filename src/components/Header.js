@@ -10,7 +10,7 @@ const Header = (props) => {
         <Navbar
           handleLogout={props.handleLogout}
         />
-        <h3>Welcome {props.username.toUpperCase()}</h3>
+        <h3>Welcome {props.username}</h3>
     </header>
   )
 }

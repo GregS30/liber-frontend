@@ -7,16 +7,13 @@ import FilterContainer from "./FilterContainer.js";
 import TaskListContainer from "./TaskListContainer.js";
 import TaskMetricsContainer from "./TaskMetricsContainer.js";
 
+
+const REFRESH_TASKS_INTERVAL = 120000
+
 class TaskContainer extends Component {
 
   componentDidMount() {
-    // console.log("componendDidMount")
-    //    this.props.getTasks('2015-09-28')  // testing only
-
-
-//    this.setupInterval()
-
-
+    this.setupInterval()
     if (this.props.dateFilter) {
       this.props.getTasks(this.props.dateFilter)
     }
@@ -34,13 +31,14 @@ class TaskContainer extends Component {
   }
 
   setupInterval = () => {
+    // fetch new task list perodically
     this.interval = setInterval(() => {
       this.refreshTasks()
-    }, 10000)
+    }, REFRESH_TASKS_INTERVAL)
   }
 
   refreshTasks = () => {
-    console.log("refreshTasks()")
+    // console.log("refreshTasks()")
     if (this.props.dateFilter === 'Today') {
       this.props.getTasks(this.props.dateFilter)
     }

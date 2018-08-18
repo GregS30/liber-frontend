@@ -10,13 +10,12 @@ const PeriodFilter = (props) => {
         value={props.selectedPeriod}
         onChange={props.handlePeriodSelect}
         >
-        {props.taskPeriods.map(period =>
-            <option key={period}>{period}</option>
+        {props.periods.map(period =>
+            <option key={period.name}>{period.name}</option>
         )}
         </select>
     </div>
   )
-
 }
 
 export default PeriodFilter;

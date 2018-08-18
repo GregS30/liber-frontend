@@ -1,4 +1,21 @@
-import {STORE_USER, CLEAR_USER, LOGGED_IN, STORE_FILTERS, IS_FETCHING, STORE_TASKS, STORE_DATE_SELECT, STORE_USER_SELECT, STORE_PROJECT_SELECT, STORE_TASKNAME_SELECT, STORE_JOB_SELECT, STORE_STATUS_SELECT, STORE_FILTERED_TASKS, STORE_CLIENT_SELECT, STORE_WORKFLOW_SELECT, STORE_METRICS, CLEAR_STATE, STORE_STYLE_SELECT} from './types';
+import {STORE_USER, CLEAR_USER, LOGGED_IN, STORE_FILTERS, IS_FETCHING, STORE_TASKS, STORE_DATE_SELECT, STORE_USER_SELECT, STORE_PROJECT_SELECT, STORE_TASKNAME_SELECT, STORE_JOB_SELECT, STORE_STATUS_SELECT, STORE_FILTERED_TASKS, STORE_CLIENT_SELECT, STORE_WORKFLOW_SELECT, STORE_METRICS, CLEAR_STATE, STORE_STYLE_SELECT, STORE_PERIOD_SELECT, STORE_CHART_SELECT, STORE_CHART_DATASET} from './types';
+
+const TASK_LIST_STYLES = [
+  {id: 1, name: 'default'},
+  {id: 2, name: 'user'},
+  {id: 3, name: 'task'},
+  {id: 4, name: 'status'},
+]
+
+const ANALYTIC_CHARTS = [
+  {id: 1, name: 'scanner'},
+  {id: 2, name: 'user'},
+  {id: 3, name: 'task'},
+];
+
+const DEFAULT_LIST_STYLE = 'default';
+const DEFAULT_PERIOD = "today";
+const DEFAULT_CHART = 'scanner';
 
 const initialState = {
   // App
@@ -18,11 +35,13 @@ const initialState = {
   taskDates: [],  // this is an array of date values, not objects
   jobs: [],
   users: [],
-  periods: ['today', 'yesterday', 'this week', 'last week', 'this month', 'last month', 'this year', 'last year'],
-  styles: [{id: 1, name: 'default'}, {id: 2, name: 'user'}, {id: 3, name: 'task'}, {id: 4, name: 'status'}],
+  periods: [],
+  styles: TASK_LIST_STYLES,
+  charts: ANALYTIC_CHARTS,
 
   tasks: [],
   filteredTasks: [],
+  chartDataset: [],
 
   dateFilter: null,
   taskNameFilter: "",
@@ -32,7 +51,9 @@ const initialState = {
   userFilter: "",
   clientFilter: "",
   workflowFilter: "",
-  styleFilter: "default",
+  styleFilter: DEFAULT_LIST_STYLE,
+  periodFilter: DEFAULT_PERIOD,
+  chartFilter: DEFAULT_CHART,
 
   taskMetrics: null,
 
@@ -74,6 +95,7 @@ export default function reducer(state = initialState, action) {
         taskStatus: [{id: 0, name: ""}, ...action.payload.task_states],
         jobs: [{id: 0, name: ""}, ...action.payload.jobs],
         users: [{id: 0, name: ""}, ...action.payload.users],
+        periods: action.payload.periods,
         // kludge in Today, Yesterday -- see CLEAR_STATE below also
         taskDates: ['Today', 'Yesterday'],
         dateFilter: 'Today',
@@ -163,6 +185,20 @@ export default function reducer(state = initialState, action) {
         styleFilter: action.payload,
       }
 
+    case STORE_PERIOD_SELECT:
+      return { ...state,
+        periodFilter: action.payload,
+      }
+
+    case STORE_CHART_SELECT:
+      return { ...state,
+        chartFilter: action.payload,
+      }
+
+    case STORE_CHART_DATASET:
+      return { ...state,
+        chartDataset: action.payload,
+      }
 
     default:
       return state;

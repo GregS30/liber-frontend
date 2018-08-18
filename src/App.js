@@ -34,7 +34,7 @@ class App extends Component {
     return (
       <div className="page">
         <Header username={this.props.username}
-                handleLogout={this.handleLogout}/>
+          handleLogout={this.handleLogout}/>
         <div className="container">
 
           <main role="main">

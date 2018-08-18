@@ -31,6 +31,8 @@ class TaskListContainer extends Component {
         && this.filterMatch(this.props.statusFilter, jt.task_state.name)
         && this.filterMatch(parseInt(this.props.jobFilter, 10), jt.job.job_num)
         && this.filterMatch(this.props.userFilter, jt.user.username)
+        && this.filterMatch(this.props.projectFilter, jt.task.workflow.project.name)
+
     )
     // console.log("filter tasks", filtered)
     this.props.storeFilteredTasks(filtered)

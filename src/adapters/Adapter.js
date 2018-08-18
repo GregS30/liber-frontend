@@ -73,7 +73,17 @@ class Adapter {
     })
   }
 
-
+  static fetchAnalytics(chartFilter, periodStart, periodEnd, projectId, taskId, userId) {
+      return fetch(`${API}/analytics?chart=${chartFilter}&start=${periodStart}&finish=${periodEnd}&project=${projectId}&task=${taskId}&user=${userId}`)
+      .then(resp => {
+      if (resp.ok) {
+        return resp.json()
+      } else {
+        console.log("%c Adapter.fetchAnalytics failed", 'color: red', resp.statusText)
+        return false
+      }
+    })
+  }
 
 }
 export default Adapter;

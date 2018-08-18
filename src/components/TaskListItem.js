@@ -26,10 +26,10 @@ const COLOR_QA = '#e6ff99'
 
 class TaskListItem extends Component {
 
-  renderScanner = (task, scanner) => {
+  renderScanner = (task, scanner, img_count) => {
     return (
       task === 'scan'
-      ? <tr><td style={{width: C1_WIDTH}} >{scanner.toUpperCase()}</td><td style={{width: C2_WIDTH, align: C2_ALIGN}}></td></tr>
+      ? <tr><td style={{width: C1_WIDTH}} >{scanner.toUpperCase()}</td><td style={{width: C2_WIDTH, align: C2_ALIGN}}>{img_count}</td></tr>
       : null
     )
   }
@@ -49,8 +49,19 @@ class TaskListItem extends Component {
   }
 
   renderDuration = (start, finish) => {
-    let duration = moment.duration(finish.diff(start))
-    let durationString = moment.utc(duration.as('milliseconds')).format('HH:mm')
+    let durationString;
+
+    if (this.getStatus(start, finish) === 'active') {
+      durationString='*';
+    }
+    else {
+      let duration = moment.duration(finish.diff(start))
+      durationString = moment.utc(duration.as('milliseconds')).format('HH:mm')
+    }
+
+    if (durationString === '00:00') {
+      durationString = '00:01'
+    }
 
     return (
       <tr><td style={{width: C1_WIDTH}}>Duration</td><td style={{width: C2_WIDTH, align: C2_ALIGN}}>{durationString}</td></tr>
@@ -63,9 +74,9 @@ class TaskListItem extends Component {
     )
   }
 
-  renderJob = (job) => {
+  renderJob = (proj_code, job) => {
     return (
-      <tr><td style={{width: C1_WIDTH}}>Job</td><td style={{width: C2_WIDTH, align: C2_ALIGN}}>{job}</td></tr>
+      <tr><td style={{width: C1_WIDTH}}>Proj {proj_code}</td><td style={{width: C2_WIDTH, align: C2_ALIGN}}>{job}</td></tr>
     )
   }
 
@@ -116,6 +127,8 @@ class TaskListItem extends Component {
             return COLOR_STATUS_HOLD
           case 'pending':
             return COLOR_STATUS_PENDING
+          default:
+            return COLOR_STATUS_ACTIVE
         }
 
       case 'user':
@@ -141,9 +154,9 @@ class TaskListItem extends Component {
         <div className="task-item">
           <table style={{background: backgroundColor}}>
             <tbody>
-              {this.renderScanner(item.task.task_name.name, item.scanner.name)}
+              {this.renderScanner(item.task.task_name.name, item.scanner.name, item.img_count)}
               {this.renderStartTime(moment(item.start_datetime))}
-              {this.renderJob(item.job.job_num)}
+              {this.renderJob(item.task.workflow.project.proj_code, item.job.job_num)}
               {this.renderUser(item.user.username)}
               {this.renderTask(item.task.task_name.name)}
               {this.renderStatus(moment(item.start_datetime), moment(item.end_datetime))}
