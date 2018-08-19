@@ -99,6 +99,7 @@ export default function reducer(state = initialState, action) {
         // kludge in Today, Yesterday -- see CLEAR_STATE below also
         taskDates: ['Today', 'Yesterday'],
         dateFilter: 'Today',
+        // fetch no longer returns taskDates - where would it be useful?
         // taskDates: action.payload.task_dates,
         // dateFilter: action.payload.task_dates[action.payload.task_dates.length-1],
         isFetching: false,
