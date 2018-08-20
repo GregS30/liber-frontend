@@ -1,4 +1,4 @@
-import {STORE_USER, CLEAR_USER, LOGGED_IN, STORE_FILTERS, IS_FETCHING, STORE_TASKS, STORE_DATE_SELECT, STORE_USER_SELECT, STORE_PROJECT_SELECT, STORE_TASKNAME_SELECT, STORE_JOB_SELECT, STORE_STATUS_SELECT, STORE_FILTERED_TASKS, STORE_CLIENT_SELECT, STORE_WORKFLOW_SELECT, STORE_METRICS, CLEAR_STATE, STORE_STYLE_SELECT, STORE_PERIOD_SELECT, STORE_CHART_SELECT, STORE_CHART_DATASET} from './types';
+import {STORE_USER, CLEAR_USER, LOGGED_IN, STORE_FILTERS, IS_FETCHING, STORE_TASKS, STORE_DATE_SELECT, STORE_USER_SELECT, STORE_PROJECT_SELECT, STORE_TASKNAME_SELECT, STORE_JOB_SELECT, STORE_STATUS_SELECT, STORE_FILTERED_TASKS, STORE_CLIENT_SELECT, STORE_WORKFLOW_SELECT, STORE_METRICS, CLEAR_STATE, STORE_STYLE_SELECT, STORE_PERIOD_SELECT, STORE_CHART_SELECT, STORE_CHART_DATASET, STORE_CHART_OBJECT} from './types';
 
 import Adapter from './adapters/Adapter';
 
@@ -104,7 +104,7 @@ export function storeMetrics(metrics) {
 }
 
 export function getTasks(startDate) {
-  startDate = (startDate === 'Today' ? '2018-08-19' : '2017-06-15')
+  startDate = (startDate === 'Today' ? '2018-08-20' : '2017-06-15')
   return (dispatch) => {
     dispatch(isFetching)
     Adapter.fetchTasks(startDate).then(json => {
@@ -206,6 +206,13 @@ export function storeChartDataset(dataset) {
   return {
     type: STORE_CHART_DATASET,
     payload: dataset
+   }
+}
+
+export function storeChartObject(object) {
+  return {
+    type: STORE_CHART_OBJECT,
+    payload: object
    }
 }
 

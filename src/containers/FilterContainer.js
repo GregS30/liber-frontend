@@ -50,8 +50,8 @@ class FilterContainer extends Component {
         {this.props.parent === 'analytics'
         ? <PeriodFilter
           periods={this.props.periods}
-          selectedPeriods={this.props.periodFilter}
-          handlePeriodsSelect={this.handlePeriodsSelect} />
+          selectedPeriod={this.props.periodFilter}
+          handlePeriodSelect={this.handlePeriodSelect} />
         : null}
 
         {this.props.parent === 'analytics'

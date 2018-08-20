@@ -74,7 +74,9 @@ class Adapter {
   }
 
   static fetchAnalytics(chartFilter, periodStart, periodEnd, projectId, taskId, userId) {
-      return fetch(`${API}/analytics?chart=${chartFilter}&start=${periodStart}&finish=${periodEnd}&project=${projectId}&task=${taskId}&user=${userId}`)
+      let url = `${API}/analytics?chart=${chartFilter}&start=${periodStart}&finish=${periodEnd}&project=${projectId}&task=${taskId}&user=${userId}`
+      console.log(url)
+      return fetch(url)
       .then(resp => {
       if (resp.ok) {
         return resp.json()

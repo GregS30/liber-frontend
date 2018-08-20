@@ -1,4 +1,4 @@
-import {STORE_USER, CLEAR_USER, LOGGED_IN, STORE_FILTERS, IS_FETCHING, STORE_TASKS, STORE_DATE_SELECT, STORE_USER_SELECT, STORE_PROJECT_SELECT, STORE_TASKNAME_SELECT, STORE_JOB_SELECT, STORE_STATUS_SELECT, STORE_FILTERED_TASKS, STORE_CLIENT_SELECT, STORE_WORKFLOW_SELECT, STORE_METRICS, CLEAR_STATE, STORE_STYLE_SELECT, STORE_PERIOD_SELECT, STORE_CHART_SELECT, STORE_CHART_DATASET} from './types';
+import {STORE_USER, CLEAR_USER, LOGGED_IN, STORE_FILTERS, IS_FETCHING, STORE_TASKS, STORE_DATE_SELECT, STORE_USER_SELECT, STORE_PROJECT_SELECT, STORE_TASKNAME_SELECT, STORE_JOB_SELECT, STORE_STATUS_SELECT, STORE_FILTERED_TASKS, STORE_CLIENT_SELECT, STORE_WORKFLOW_SELECT, STORE_METRICS, CLEAR_STATE, STORE_STYLE_SELECT, STORE_PERIOD_SELECT, STORE_CHART_SELECT, STORE_CHART_DATASET, STORE_CHART_OBJECT} from './types';
 
 const TASK_LIST_STYLES = [
   {id: 1, name: 'default'},
@@ -11,6 +11,8 @@ const ANALYTIC_CHARTS = [
   {id: 1, name: 'scanner'},
   {id: 2, name: 'user'},
   {id: 3, name: 'task'},
+  {id: 4, name: 'client'},
+  {id: 5, name: 'project'},
 ];
 
 const DEFAULT_LIST_STYLE = 'default';
@@ -41,7 +43,6 @@ const initialState = {
 
   tasks: [],
   filteredTasks: [],
-  chartDataset: [],
 
   dateFilter: null,
   taskNameFilter: "",
@@ -53,7 +54,10 @@ const initialState = {
   workflowFilter: "",
   styleFilter: DEFAULT_LIST_STYLE,
   periodFilter: DEFAULT_PERIOD,
+
+  chartDataset: null,
   chartFilter: DEFAULT_CHART,
+  chartObject: null,
 
   taskMetrics: null,
 
@@ -199,6 +203,11 @@ export default function reducer(state = initialState, action) {
     case STORE_CHART_DATASET:
       return { ...state,
         chartDataset: action.payload,
+      }
+
+    case STORE_CHART_OBJECT:
+      return { ...state,
+        chartObject: action.payload,
       }
 
     default:

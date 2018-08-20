@@ -5,7 +5,6 @@ import { getAnalytics } from '../actions';
 
 import FilterContainer from "./FilterContainer.js";
 import ReportContainer from "./ReportContainer.js";
-// import TaskMetricsContainer from "./TaskMetricsContainer.js";
 
 class AnalyticsContainer extends Component {
 
@@ -16,17 +15,15 @@ class AnalyticsContainer extends Component {
       this.props.chartFilter,
       this.props.periods[periodIndex].start_date,
       this.props.periods[periodIndex].end_date,
-      this.props.projects.find((item) => item.name === this.props.projectFilter).id,
-
-      this.props.taskNameFilter
-      ? this.props.taskNames.find((item) => item.name === this.props.taskNameFilter).id
-      : '',
-
-      this.props.userFilter
-      ? this.props.users.find((item) => item.username === this.props.userFilter).id
-      : ''
+      this.getFilterId(this.props.projectFilter, this.props.projects),
+      this.getFilterId(this.props.taskNameFilter, this.props.taskNames),
+      this.props.userFilter ? this.props.users.find((item) => item.username === this.props.userFilter).id : ''
     )
   }
+
+  getFilterId = (userInput, filterList) =>
+    // if the user made no selection, then userInput is a blank string
+    userInput ? filterList.find((item) => item.name === userInput).id : ''
 
   render() {
     console.log("AnalyticsContainer render", this.props)
