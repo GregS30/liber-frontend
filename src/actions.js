@@ -1,4 +1,4 @@
-import {STORE_USER, CLEAR_USER, LOGGED_IN, STORE_FILTERS, IS_FETCHING, STORE_TASKS, STORE_DATE_SELECT, STORE_USER_SELECT, STORE_PROJECT_SELECT, STORE_TASKNAME_SELECT, STORE_JOB_SELECT, STORE_STATUS_SELECT, STORE_FILTERED_TASKS, STORE_CLIENT_SELECT, STORE_WORKFLOW_SELECT, STORE_METRICS, CLEAR_STATE, STORE_STYLE_SELECT, STORE_PERIOD_SELECT, STORE_CHART_SELECT, STORE_CHART_DATASET, STORE_CHART_OBJECT} from './types';
+import {STORE_USER, CLEAR_USER, LOGGED_IN, STORE_FILTERS, IS_FETCHING, STORE_TASKS, STORE_DATE_SELECT, STORE_USER_SELECT, STORE_PROJECT_SELECT, STORE_TASKNAME_SELECT, STORE_JOB_SELECT, STORE_STATUS_SELECT, STORE_FILTERED_TASKS, STORE_CLIENT_SELECT, STORE_WORKFLOW_SELECT, STORE_METRICS, CLEAR_STATE, STORE_STYLE_SELECT, STORE_PERIOD_SELECT, STORE_CHART_SELECT, STORE_CHART_DATASET, STORE_CHART_OBJECT, STORE_SCANNING} from './types';
 
 import Adapter from './adapters/Adapter';
 
@@ -93,12 +93,13 @@ export function storeFilteredTasks(json) {
   }
 }
 
-export function storeMetrics(metrics) {
-  console.log("storeMetrics()", metrics)
+export function storeMetrics(metrics, scanned) {
+  // console.log("storeMetrics()", metrics)
   return {
     type: STORE_METRICS,
     payload: {
       metrics: metrics,
+      scanned: scanned,
     }
   }
 }
@@ -228,5 +229,12 @@ export function getAnalytics(chartFilter, periodStart, periodEnd, projectId, tas
         console.log('getAnalytics() failed')
       }
     });
+  }
+}
+
+export function storeScanned(scannedImages) {
+ return {
+   type: STORE_SCANNING,
+   payload: scannedImages
   }
 }

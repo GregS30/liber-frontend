@@ -8,7 +8,7 @@ import TaskListContainer from "./TaskListContainer.js";
 import TaskMetricsContainer from "./TaskMetricsContainer.js";
 
 
-const REFRESH_TASKS_INTERVAL = 120000
+const REFRESH_TASKS_INTERVAL = 30000
 
 class TaskContainer extends Component {
 
@@ -39,6 +39,7 @@ class TaskContainer extends Component {
 
   refreshTasks = () => {
     // console.log("refreshTasks()")
+    // only tasks currently ocurring need redreshed!
     if (this.props.dateFilter === 'Today') {
       this.props.getTasks(this.props.dateFilter)
     }

@@ -1,15 +1,23 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
+import moment from 'moment';
 
 import TaskListItem from "../components/TaskListItem.js";
 
 import { storeFilteredTasks } from '../actions';
 
+const REFRESH_SCANS_INTERVAL = 9000
+
 class TaskListContainer extends Component {
 
   componentDidMount() {
     // console.log("componendDidMount")
+    this.setupInterval()
     this.filterTasks()
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.interval)
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -25,14 +33,33 @@ class TaskListContainer extends Component {
     }
   }
 
+  setupInterval = () => {
+    // fetch new task list perodically
+    this.interval = setInterval(() => {
+      this.refreshImagesScanned()
+    }, REFRESH_SCANS_INTERVAL)
+  }
+
+  refreshImagesScanned = () => {
+    console.log("refresh images scanned")
+  }
+
+  getImagesScanned = (img_count, start, finish) => {
+    let duration = moment.duration(finish.diff(start)).as('milliseconds')
+    let elapsed = moment.duration(moment().diff(start)).as('milliseconds')
+    let imagesPerSecond = img_count/duration/1000
+    let imagesScanned = Math.round(imagesPerSecond * elapsed * 1000)
+    console.log(`duration=${duration/1000}, elapsed=${elapsed/1000}, rate=${imagesPerSecond}, scanned=${imagesScanned}`)
+    return imagesScanned
+  }
+
   filterTasks = () => {
     let filtered = this.props.tasks.filter((jt) =>
       this.filterMatch(this.props.taskNameFilter, jt.task.task_name.name)
-        && this.filterMatch(this.props.statusFilter, jt.task_state.name)
+        && this.filterStatus(this.props.statusFilter, jt)
         && this.filterMatch(parseInt(this.props.jobFilter, 10), jt.job.job_num)
         && this.filterMatch(this.props.userFilter, jt.user.username)
         && this.filterMatch(this.props.projectFilter, jt.task.workflow.project.name)
-
     )
     // console.log("filter tasks", filtered)
     this.props.storeFilteredTasks(filtered)
@@ -40,6 +67,29 @@ class TaskListContainer extends Component {
 
   filterMatch = (filter, value) =>
     !filter ? true : filter === value
+
+  filterStatus = (statusFilter, task) => {
+    if (!statusFilter) {
+      return true
+    }
+    else {
+      let start = moment(task.start_datetime)
+      let finish = moment(task.end_datetime)
+      let status = task.task_state.name
+      let now = moment()
+
+      if (start > now) {
+        status = 'pending'
+      }
+      if (finish < now) {
+        status = 'closed'
+      }
+      if (now > start && now < finish) {
+        status = 'active'
+      }
+      return status === statusFilter ? true : false
+    }
+  }
 
   render() {
     // console.log("TaskListContainer render", this.props)
@@ -49,7 +99,9 @@ class TaskListContainer extends Component {
           <h3>Tasks</h3>
           {this.props.filteredTasks.map(jt => {
             return (
-              <TaskListItem key={jt.id} item={jt} />
+              <TaskListItem key={jt.id} item={jt}
+               statusFilter={this.props.statusFilter}
+               getImagesScanned={this.getImagesScanned} />
             )
           })}
         </div>

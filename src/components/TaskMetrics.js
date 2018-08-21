@@ -28,6 +28,10 @@ const TaskMetrics = (props) => {
             <td>Projects</td>
             <td align="right">{props.metrics.projects}</td>
           </tr>
+          <tr>
+            <td>Scanned</td>
+            <td align="right">{props.scanned}</td>
+          </tr>
         </tbody>
       </table>
       : null

@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 
-import { Pie, Bar, Doughnut } from 'react-chartjs-2';
+import { Bar, Doughnut } from 'react-chartjs-2';
 
 import { storeChartObject } from '../actions';
 
@@ -44,6 +44,8 @@ class ReportContainer extends Component {
   }
 
   mapColors = (names, list) => {
+    console.log("names", names)
+    console.log("list", list)
     let colors = []
     names.forEach((name) =>
       colors.push(list.find((item) => item.name === name).color)
@@ -61,6 +63,7 @@ class ReportContainer extends Component {
         {
           labels: labels,
           datasets: [{
+            label: '',
             data: doughData,
             backgroundColor: this.getColors(labels),
           }]
@@ -68,6 +71,7 @@ class ReportContainer extends Component {
         {
           labels: labels,
           datasets: [{
+            label: '',
             data: barData,
             backgroundColor: this.getColors(labels),
           }]

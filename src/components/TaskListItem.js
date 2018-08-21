@@ -1,7 +1,8 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
-// import Moment from 'moment-react';
 import moment from 'moment';
+
+import { storeScanned } from '../actions';
 
 const C1_WIDTH = '100px'
 const C2_WIDTH = '80px'
@@ -29,7 +30,7 @@ class TaskListItem extends Component {
   renderScanner = (task, scanner, img_count) => {
     return (
       task === 'scan'
-      ? <tr><td style={{width: C1_WIDTH}} >{scanner.toUpperCase()}</td><td style={{width: C2_WIDTH, align: C2_ALIGN}}>{img_count}</td></tr>
+      ? <tr><td style={{width: C1_WIDTH}} >{scanner.toUpperCase()}</td><td style={{width: C2_WIDTH, align: C2_ALIGN}}></td></tr>
       : null
     )
   }
@@ -48,10 +49,10 @@ class TaskListItem extends Component {
     )
   }
 
-  renderDuration = (start, finish) => {
+  getDuration = (currentStatus, start, finish) => {
     let durationString;
 
-    if (this.getStatus(start, finish) === 'active') {
+    if (currentStatus === 'active') {
       durationString='*';
     }
     else {
@@ -63,9 +64,7 @@ class TaskListItem extends Component {
       durationString = '00:01'
     }
 
-    return (
-      <tr><td style={{width: C1_WIDTH}}>Duration</td><td style={{width: C2_WIDTH, align: C2_ALIGN}}>{durationString}</td></tr>
-    )
+    return durationString
   }
 
   renderStartTime = (startTime) => {
@@ -80,14 +79,36 @@ class TaskListItem extends Component {
     )
   }
 
-  renderStatus = (start, finish) => {
-    return (
-      <tr><td style={{width: C1_WIDTH}}>Status</td><td style={{width: C2_WIDTH, align: C2_ALIGN}}>{this.getStatus(start, finish)}</td></tr>
-    )
+  renderStatusAndDuration = (task) => {
+    let start = moment(task.start_datetime)
+    let finish = moment(task.end_datetime)
+    let status = this.getStatus(task.task_state.name, start, finish)
+    let durationString = this.getDuration(status, start, finish)
+
+    if (status === 'active') {
+      let imagesScanned = this.props.getImagesScanned(task.img_count, start, finish)
+      // if (this.props.statusFilter === 'active') {
+      //   this.props.storeScanned(imagesScanned)
+      // }
+      return (
+        <Fragment>
+          <tr><td style={{width: C1_WIDTH}}>Status</td><td style={{width: C2_WIDTH, align: C2_ALIGN}}>{status}</td></tr>
+          <tr><td style={{width: C1_WIDTH}}>Scanning</td><td style={{width: C2_WIDTH, align: C2_ALIGN}}>{imagesScanned}</td></tr>
+        </Fragment>
+      )
+    }
+    else {
+      return (
+        <Fragment>
+          <tr><td style={{width: C1_WIDTH}}>Status</td><td style={{width: C2_WIDTH, align: C2_ALIGN}}>{status}</td></tr>
+          <tr><td style={{width: C1_WIDTH}}>Duration</td><td style={{width: C2_WIDTH, align: C2_ALIGN}}>{durationString}</td></tr>
+        </Fragment>
+      )
+    }
   }
 
-  getStatus = (start, finish) => {
-    let status = 'open'
+  getStatus = (currentStatus, start, finish) => {
+    let status = currentStatus
     let now = moment()
 
     if (start > now) {
@@ -105,7 +126,7 @@ class TaskListItem extends Component {
 
   getColor = (task) => {
 
-    let taskStatus = this.getStatus(moment(task.start_datetime), moment(task.end_datetime))
+    let taskStatus = this.getStatus(task.task_state.name, moment(task.start_datetime), moment(task.end_datetime))
 
     switch(this.props.styleFilter) {
 
@@ -133,21 +154,17 @@ class TaskListItem extends Component {
 
       case 'user':
         return this.props.users.find((user) => user.name === task.user.username).color
-        // return COLOR[this.props.users.findIndex((user) => user.name === task.user.username)]
 
       case 'status':
         return this.props.statuses.find((status) => status.name === taskStatus).color
-        // return COLOR[this.props.statuses.findIndex((status) => status.name === taskStatus)]
 
       case 'task':
         return this.props.taskNames.find((name) => name.name === task.task.task_name.name).color
-        // return COLOR[this.props.taskNames.findIndex((name) => name.name === task.task.task_name.name)]
 
       default:
         return COLOR[0];
 
     }
-
   }
 
   renderItem = (item) => {
@@ -162,8 +179,7 @@ class TaskListItem extends Component {
               {this.renderJob(item.task.workflow.project.proj_code, item.job.job_num)}
               {this.renderUser(item.user.username)}
               {this.renderTask(item.task.task_name.name)}
-              {this.renderStatus(moment(item.start_datetime), moment(item.end_datetime))}
-              {this.renderDuration(moment(item.start_datetime), moment(item.end_datetime))}
+              {this.renderStatusAndDuration(item)}
             </tbody>
           </table>
         </div>
@@ -187,6 +203,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
+    storeScanned: (scannedImages) =>  dispatch(storeScanned(scannedImages)),
   }
 }
 
