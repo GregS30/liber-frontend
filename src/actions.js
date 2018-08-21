@@ -104,7 +104,7 @@ export function storeMetrics(metrics) {
 }
 
 export function getTasks(startDate) {
-  startDate = (startDate === 'Today' ? '2018-08-20' : '2017-06-15')
+  startDate = (startDate === 'Today' ? '2018-08-21' : '2017-06-15')
   return (dispatch) => {
     dispatch(isFetching)
     Adapter.fetchTasks(startDate).then(json => {
@@ -209,10 +209,10 @@ export function storeChartDataset(dataset) {
    }
 }
 
-export function storeChartObject(object) {
+export function storeChartObject(dough, bar) {
   return {
     type: STORE_CHART_OBJECT,
-    payload: object
+    payload: {dough: dough, bar: bar}
    }
 }
 

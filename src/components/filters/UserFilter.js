@@ -11,7 +11,7 @@ const UserFilter = (props) => {
         onChange={props.handleUserSelect}
         >
         {props.users.map(user =>
-            <option key={user.id}>{user.username}</option>
+            <option key={user.id}>{user.name}</option>
         )}
         </select>
     </div>

@@ -38,6 +38,7 @@ const initialState = {
   jobs: [],
   users: [],
   periods: [],
+  scanners: [],
   styles: TASK_LIST_STYLES,
   charts: ANALYTIC_CHARTS,
 
@@ -57,7 +58,8 @@ const initialState = {
 
   chartDataset: null,
   chartFilter: DEFAULT_CHART,
-  chartObject: null,
+  doughChart: null,
+  barChart: null,
 
   taskMetrics: null,
 
@@ -99,6 +101,7 @@ export default function reducer(state = initialState, action) {
         taskStatus: [{id: 0, name: ""}, ...action.payload.task_states],
         jobs: [{id: 0, name: ""}, ...action.payload.jobs],
         users: [{id: 0, name: ""}, ...action.payload.users],
+        scanners: [{id: 0, name: ""}, ...action.payload.scanners],
         periods: action.payload.periods,
         // kludge in Today, Yesterday -- see CLEAR_STATE below also
         taskDates: ['Today', 'Yesterday'],
@@ -207,7 +210,8 @@ export default function reducer(state = initialState, action) {
 
     case STORE_CHART_OBJECT:
       return { ...state,
-        chartObject: action.payload,
+        doughChart: action.payload.dough,
+        barChart: action.payload.bar,
       }
 
     default:

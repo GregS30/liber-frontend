@@ -17,7 +17,7 @@ class AnalyticsContainer extends Component {
       this.props.periods[periodIndex].end_date,
       this.getFilterId(this.props.projectFilter, this.props.projects),
       this.getFilterId(this.props.taskNameFilter, this.props.taskNames),
-      this.props.userFilter ? this.props.users.find((item) => item.username === this.props.userFilter).id : ''
+      this.getFilterId(this.props.userFilter, this.props.users)
     )
   }
 

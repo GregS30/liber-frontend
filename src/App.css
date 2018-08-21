@@ -35,10 +35,25 @@ select {
 
 .report-container {
   float: left;
-  width: 400px;
+  width: 700px;
   margin-left: 1em;
   margin-top: 1em;
 }
+
+.report-container-bar {
+  float: left;
+  width: 600px;
+  margin-left: 1em;
+  margin-top: 1em;
+}
+
+.report-container-dough {
+  float: left;
+  width: 600px;
+  margin-left: 1em;
+  margin-top: 1em;
+}
+
 
 .task-list {
   float: right;

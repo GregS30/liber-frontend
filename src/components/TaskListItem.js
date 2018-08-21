@@ -132,13 +132,16 @@ class TaskListItem extends Component {
         }
 
       case 'user':
-        return COLOR[this.props.users.findIndex((user) => user.username === task.user.username)]
+        return this.props.users.find((user) => user.name === task.user.username).color
+        // return COLOR[this.props.users.findIndex((user) => user.name === task.user.username)]
 
       case 'status':
-        return COLOR[this.props.statuses.findIndex((status) => status.name === taskStatus)]
+        return this.props.statuses.find((status) => status.name === taskStatus).color
+        // return COLOR[this.props.statuses.findIndex((status) => status.name === taskStatus)]
 
       case 'task':
-        return COLOR[this.props.taskNames.findIndex((name) => name.name === task.task.task_name.name)]
+        return this.props.taskNames.find((name) => name.name === task.task.task_name.name).color
+        // return COLOR[this.props.taskNames.findIndex((name) => name.name === task.task.task_name.name)]
 
       default:
         return COLOR[0];
