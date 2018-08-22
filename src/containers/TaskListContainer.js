@@ -97,7 +97,6 @@ class TaskListContainer extends Component {
     return (
       <Fragment>
         <div className="task-list">
-          <h3>Tasks</h3>
           {this.props.filteredTasks.map(jt => {
             return (
               <TaskListItem key={jt.id} item={jt}

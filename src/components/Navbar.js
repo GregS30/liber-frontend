@@ -12,10 +12,11 @@ const Navbar = (props) => {
       {!!Adapter.getToken()
         ?
           <ul className="nav-main">
-            <li><NavLink to="/" exact>Home</NavLink></li>
-            <li><NavLink to="/tasks" exact>Tasks</NavLink></li>
-            <li><NavLink to="/analytics" exact>Analytics</NavLink></li>
-            <li><NavLink to="/workflows" exact>Workflows</NavLink></li>
+            <li><NavLink className="nav-link" to="/" exact>Home</NavLink></li>
+            <li><NavLink className="nav-link" to="/tasks" exact>Tasks</NavLink></li>
+            <li><NavLink className="nav-link" to="/analytics" exact>Analytics</NavLink></li>
+            <li><NavLink className="nav-link" to="/workflows" exact>Workflows</NavLink></li>
+            <li><div className="welcome">Welcome {props.username}</div></li>
             <li><button onClick={props.handleLogout}>Log Out</button></li>
           </ul>
         : <Login

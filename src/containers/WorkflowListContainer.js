@@ -13,6 +13,7 @@ class WorkflowListContainer extends Component {
       <Fragment>
         <div className="workflow-task-list">
           <h4>{this.props.workflow.project_name}</h4>
+          <h4>({this.props.workflow.proj_code})</h4>
           {this.props.taskList.map(tl => {
             return (
               <WorkflowTask key={tl.task_id} item={tl}

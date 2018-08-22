@@ -49,6 +49,7 @@ class TaskContainer extends Component {
     return (
         <Fragment>
           <div className="task-container">
+            <div className="page-header"><h2>Tasks</h2></div>
             <div className="task-sidebar">
               {this.props.filtersLoaded
                 ? <FilterContainer parent={'task'}/>

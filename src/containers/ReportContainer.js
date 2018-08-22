@@ -108,7 +108,6 @@ class ReportContainer extends Component {
     return (
       <Fragment>
         <div className="report-container">
-          <h3>Chart</h3>
           {this.props.barChart
           ? this.renderCharts()
           : null}

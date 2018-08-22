@@ -59,13 +59,13 @@ class WorkflowContainer extends Component {
     return (
       <Fragment>
         <div className="workflow-container">
+          <div className="page-header"><h2>Workflows</h2></div>
           <div className="workflow-sidebar">
             {this.props.filtersLoaded
               ? <FilterContainer parent={'workflow'}/>
               : null
             }
           </div>
-          <h3>Workflows</h3>
           {this.renderWorkflowLists()}
         </div>
       </Fragment>

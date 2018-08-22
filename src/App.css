@@ -2,9 +2,23 @@ body {
   font-family: 'Lekton', sans-serif;
 }
 
+h4 {
+  font-size: 1em;
+  line-height: .25;
+  margin-bottom: .4125em;
+}
 
-div.header-container {
+.welcome {
+  font-size: 1em;
+  line-height: .25;
+  margin-bottom: .4125em;
+  padding-right: 2em;
+  padding-left: 18em;
+}
 
+
+.nav-link {
+  text-decoration: none;
 }
 
 select {
@@ -24,6 +38,12 @@ select {
   display: inline-block;
   padding: .5em 1.15em .5em 1.4em;
   text-transform: uppercase;
+}
+
+.page-header {
+  width: 1060px;
+  margin-left: 1em;
+  text-align: left;
 }
 
 .workflow-container {
@@ -81,6 +101,8 @@ select {
 .task-list {
   float: right;
   width: 800px;
+  height: 600px;
+  overflow: scroll;
   margin-left: 1em;
   margin-top: 1em;
 }
@@ -104,33 +126,4 @@ select {
 
 .task-table .c1 {
   width: 100px;
-}
-
-.App {
-  text-align: center;
-}
-
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px;
-}
-
-.App-header {
-  background-color: #222;
-  height: 150px;
-  padding: 20px;
-  color: white;
-}
-
-.App-title {
-  font-size: 1.5em;
-}
-
-.App-intro {
-  font-size: large;
-}
-
-@keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
 }
