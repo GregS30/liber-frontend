@@ -86,5 +86,19 @@ class Adapter {
       }
     })
   }
+
+  static fetchWorkflows() {
+    return fetch(`${API}/workflows`)
+    .then(resp => {
+      if (resp.ok) {
+        return resp.json()
+      } else {
+        console.log("%c Adapter.fetchWorkflows failed", 'color: red', resp.statusText)
+        return false
+      }
+    })
+  }
+
+
 }
 export default Adapter;

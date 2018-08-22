@@ -1,4 +1,4 @@
-import {STORE_USER, CLEAR_USER, LOGGED_IN, STORE_FILTERS, IS_FETCHING, STORE_TASKS, STORE_DATE_SELECT, STORE_USER_SELECT, STORE_PROJECT_SELECT, STORE_TASKNAME_SELECT, STORE_JOB_SELECT, STORE_STATUS_SELECT, STORE_FILTERED_TASKS, STORE_CLIENT_SELECT, STORE_WORKFLOW_SELECT, STORE_METRICS, CLEAR_STATE, STORE_STYLE_SELECT, STORE_PERIOD_SELECT, STORE_CHART_SELECT, STORE_CHART_DATASET, STORE_CHART_OBJECT, STORE_SCANNING} from './types';
+import {STORE_USER, CLEAR_USER, LOGGED_IN, STORE_FILTERS, IS_FETCHING, STORE_TASKS, STORE_DATE_SELECT, STORE_USER_SELECT, STORE_PROJECT_SELECT, STORE_TASKNAME_SELECT, STORE_JOB_SELECT, STORE_STATUS_SELECT, STORE_FILTERED_TASKS, STORE_CLIENT_SELECT, STORE_WORKFLOW_SELECT, STORE_METRICS, CLEAR_STATE, STORE_STYLE_SELECT, STORE_PERIOD_SELECT, STORE_CHART_SELECT, STORE_CHART_DATASET, STORE_CHART_OBJECT, STORE_SCANNING, SET_TASK_RENDER, SET_WORKFLOW_FILTERS, STORE_FILTERED_WORKFLOWS, STORE_WORKFLOWS} from './types';
 
 import Adapter from './adapters/Adapter';
 
@@ -87,9 +87,21 @@ export function storeTasks(json) {
 export function storeFilteredTasks(json) {
   return {
     type: STORE_FILTERED_TASKS,
-    payload: {
-      tasks: json,
-    }
+    payload: json
+  }
+}
+
+export function storeWorkflows(json) {
+  return {
+    type: STORE_WORKFLOWS,
+    payload: json
+   }
+}
+
+export function storeFilteredWorkflows(json) {
+  return {
+    type: STORE_FILTERED_WORKFLOWS,
+    payload: json
   }
 }
 
@@ -236,5 +248,34 @@ export function storeScanned(scannedImages) {
  return {
    type: STORE_SCANNING,
    payload: scannedImages
+  }
+}
+
+export function setTaskRender(flag) {
+ return {
+   type: SET_TASK_RENDER,
+   payload: flag
+  }
+}
+
+export function setWorkflowFilters() {
+ return {
+   type: SET_WORKFLOW_FILTERS,
+  }
+}
+
+export function getWorkflows() {
+  return (dispatch) => {
+    dispatch(isFetching)
+    Adapter.fetchWorkflows().then(json => {
+      if (json) {
+        dispatch(storeWorkflows(json))
+        dispatch(storeFilteredWorkflows(json))
+        dispatch(setWorkflowFilters())
+        console.log('getWorkflows() ok')
+      } else {
+        console.log('getWorkflows() failed')
+      }
+    });
   }
 }

@@ -43,6 +43,7 @@ class FilterContainer extends Component {
     this.props.storeChartSelect(event.target.value)
 
   render() {
+    console.log("filters-container")
     return (
       <div className="filters-container">
         <h3>Filters</h3>

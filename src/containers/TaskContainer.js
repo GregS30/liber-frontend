@@ -7,8 +7,7 @@ import FilterContainer from "./FilterContainer.js";
 import TaskListContainer from "./TaskListContainer.js";
 import TaskMetricsContainer from "./TaskMetricsContainer.js";
 
-
-const REFRESH_TASKS_INTERVAL = 30000
+const REFRESH_TASKS_INTERVAL = 60000
 
 class TaskContainer extends Component {
 
@@ -72,6 +71,7 @@ const mapStateToProps = state => {
     filteredTasks: state.filteredTasks,
     filtersLoaded: state.filtersLoaded,
     taskMetrics: state.taskMetrics,
+    forceTaskRender: state.forceTaskRender,
   }
 }
 

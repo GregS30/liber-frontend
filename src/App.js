@@ -59,7 +59,6 @@ class App extends Component {
 
         </div>
 
-        {/* === FOOTER ===*/}
         <footer className="footer">
           <Footer />
         </footer>

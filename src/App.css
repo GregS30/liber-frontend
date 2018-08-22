@@ -26,6 +26,31 @@ select {
   text-transform: uppercase;
 }
 
+.workflow-container {
+
+}
+
+.workflow-sidebar {
+  float: left;
+  width: 220px;
+  margin-left: 1em;
+  margin-top: 1em;
+}
+
+.workflow-task-list {
+  float: left;
+  width: 170px;
+  margin-left: 1em;
+  margin-top: 1em;
+}
+
+.workflow-task {
+  float: left;
+  width: 160px;
+  height: 30px;
+  padding: .5em .5em .5em .5em;
+}
+
 .task-sidebar {
   float: left;
   width: 220px;
@@ -53,7 +78,6 @@ select {
   margin-left: 1em;
   margin-top: 1em;
 }
-
 
 .task-list {
   float: right;

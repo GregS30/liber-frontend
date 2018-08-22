@@ -4,7 +4,7 @@ import moment from 'moment';
 
 import TaskListItem from "../components/TaskListItem.js";
 
-import { storeFilteredTasks } from '../actions';
+import { storeFilteredTasks, setTaskRender } from '../actions';
 
 const REFRESH_SCANS_INTERVAL = 9000
 
@@ -12,7 +12,7 @@ class TaskListContainer extends Component {
 
   componentDidMount() {
     // console.log("componendDidMount")
-    this.setupInterval()
+//    this.setupInterval()
     this.filterTasks()
   }
 
@@ -42,6 +42,7 @@ class TaskListContainer extends Component {
 
   refreshImagesScanned = () => {
     console.log("refresh images scanned")
+    this.props.setTaskRender(true)
   }
 
   getImagesScanned = (img_count, start, finish) => {
@@ -61,7 +62,7 @@ class TaskListContainer extends Component {
         && this.filterMatch(this.props.userFilter, jt.user.username)
         && this.filterMatch(this.props.projectFilter, jt.task.workflow.project.name)
     )
-    // console.log("filter tasks", filtered)
+    console.log("filter tasks", filtered)
     this.props.storeFilteredTasks(filtered)
   }
 
@@ -123,12 +124,14 @@ const mapStateToProps = state => {
     filteredTasks: state.filteredTasks,
     filtersLoaded: state.filtersLoaded,
     taskMetrics: state.taskMetrics,
+    refreshTasks: state.refreshTasks,
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
     storeFilteredTasks: (filteredTasks) =>  dispatch(storeFilteredTasks(filteredTasks)),
+    setTaskRender: (flag) => dispatch(setTaskRender(flag)),
   }
 }
 
