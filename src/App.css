@@ -39,14 +39,13 @@ select {
 
 .workflow-task-list {
   float: left;
-  width: 170px;
+  width: 110px;
   margin-left: 1em;
   margin-top: 1em;
 }
 
 .workflow-task {
   float: left;
-  width: 160px;
   height: 30px;
   padding: .5em .5em .5em .5em;
 }

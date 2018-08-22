@@ -12,10 +12,10 @@ class WorkflowListContainer extends Component {
     return (
       <Fragment>
         <div className="workflow-task-list">
-          <h3>Workflows</h3>
-          {this.props.workflowTasks.map(wt => {
+          <h4>{this.props.workflow.project_name}</h4>
+          {this.props.taskList.map(tl => {
             return (
-              <WorkflowTask key={wt.task_id} item={wt}
+              <WorkflowTask key={tl.task_id} item={tl}
               />
             )
           })}
@@ -27,8 +27,6 @@ class WorkflowListContainer extends Component {
 
 const mapStateToProps = state => {
   return {
-    isFetching: state.isFetching,
-    workflowTasks: state.workflowTasks,
   }
 }
 

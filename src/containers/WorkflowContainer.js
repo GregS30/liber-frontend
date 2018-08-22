@@ -44,6 +44,16 @@ class WorkflowContainer extends Component {
     // if the user made no selection, then userInput is a blank string
     userInput ? filterList.find((item) => item.name === userInput).id : ''
 
+  renderWorkflowLists = () => {
+    return (
+      this.props.workflowTasks.map((wt) => {
+        return (
+          <WorkflowListContainer workflow={wt.workflow} taskList={wt.tasks}/>
+        )
+      })
+    )
+  }
+
   render() {
   // console.log("TaskContainer render", this.props)
     return (
@@ -55,7 +65,8 @@ class WorkflowContainer extends Component {
               : null
             }
           </div>
-          <WorkflowListContainer />
+          <h3>Workflows</h3>
+          {this.renderWorkflowLists()}
         </div>
       </Fragment>
     )
