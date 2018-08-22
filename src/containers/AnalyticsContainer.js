@@ -8,6 +8,18 @@ import ReportContainer from "./ReportContainer.js";
 
 class AnalyticsContainer extends Component {
 
+  componentDidUpdate(prevProps, prevState) {
+    // console.log("componendDidUpdate")
+    if ((this.props.chartFilter !== prevProps.chartFilter)
+      || (this.props.periodFilter !== prevProps.periodFilter)
+      || (this.props.taskNameFilter !== prevProps.taskNameFilter)
+      || (this.props.projectFilter !== prevProps.projectFilter)
+      || (this.props.userFilter !== prevProps.userFilter)
+    ) {
+      this.chartIt()
+    }
+  }
+
   chartIt = () => {
     console.log("ChartIt")
     let periodIndex = this.props.periods.findIndex((item) => item.name === this.props.periodFilter)

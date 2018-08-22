@@ -1,31 +1,22 @@
-import React, { Component, Fragment } from 'react';
-import { connect } from 'react-redux';
+import React, { Fragment } from 'react';
 
-class WorkflowTask extends Component {
+const C1_WIDTH = '100px';
 
-  renderItem = (item) => {
-    return (
-      null
-    )
-  }
-
-  render() {
-    return(
+const WorkflowTask = (props) => {
+  return (
+    <Fragment>
       <div className="workflow-task">
-        {this.renderItem(this.props.item)}
+        <table style={{background: props.item.task_color}}>
+          <tbody>
+            <Fragment>
+              <tr><td style={{width: C1_WIDTH}}>{props.item.task_id}</td></tr>
+              <tr><td style={{width: C1_WIDTH}}>{props.item.task_name}</td></tr>
+            </Fragment>
+          </tbody>
+        </table>
       </div>
-    )
-  }
+    </Fragment>
+  )
 }
 
-const mapStateToProps = state => {
-  return {
-  }
-}
-
-const mapDispatchToProps = dispatch => {
-  return {
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(WorkflowTask);
+export default WorkflowTask;

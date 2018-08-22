@@ -1,4 +1,4 @@
-import {STORE_USER, CLEAR_USER, LOGGED_IN, STORE_FILTERS, IS_FETCHING, STORE_TASKS, STORE_DATE_SELECT, STORE_USER_SELECT, STORE_PROJECT_SELECT, STORE_TASKNAME_SELECT, STORE_JOB_SELECT, STORE_STATUS_SELECT, STORE_FILTERED_TASKS, STORE_CLIENT_SELECT, STORE_WORKFLOW_SELECT, STORE_METRICS, CLEAR_STATE, STORE_STYLE_SELECT, STORE_PERIOD_SELECT, STORE_CHART_SELECT, STORE_CHART_DATASET, STORE_CHART_OBJECT, STORE_SCANNING, SET_TASK_RENDER, SET_WORKFLOW_FILTERS, STORE_FILTERED_WORKFLOWS, STORE_WORKFLOWS} from './types';
+import {STORE_USER, CLEAR_USER, LOGGED_IN, STORE_FILTERS, IS_FETCHING, IS_NOT_FETCHING, STORE_TASKS, STORE_DATE_SELECT, STORE_USER_SELECT, STORE_PROJECT_SELECT, STORE_TASKNAME_SELECT, STORE_JOB_SELECT, STORE_STATUS_SELECT, STORE_FILTERED_TASKS, STORE_CLIENT_SELECT, STORE_WORKFLOW_SELECT, STORE_METRICS, CLEAR_STATE, STORE_STYLE_SELECT, STORE_PERIOD_SELECT, STORE_CHART_SELECT, STORE_CHART_DATASET, STORE_CHART_OBJECT, STORE_SCANNING, SET_TASK_RENDER, SET_WORKFLOW_FILTERS, STORE_WORKFLOWS} from './types';
 
 const TASK_LIST_STYLES = [
   {id: 1, name: 'default'},
@@ -67,7 +67,6 @@ const initialState = {
   forceTaskRender: false,
 
   workflowTasks: [],
-  filteredWorkflowTasks: [],
 
 }
 
@@ -78,6 +77,10 @@ export default function reducer(state = initialState, action) {
     case IS_FETCHING:
       return { ...state,
         isFetching: true}
+
+    case IS_NOT_FETCHING:
+      return { ...state,
+        isFetching: false}
 
     case LOGGED_IN:
       return { ...state,
@@ -144,7 +147,7 @@ export default function reducer(state = initialState, action) {
       tasks: [],
       filteredTasks: [],
       workflowTasks: [],
-      filteredWorkflowTasks: [],      
+      filteredWorkflowTasks: [],
     }
 
     case STORE_DATE_SELECT:
@@ -244,11 +247,6 @@ export default function reducer(state = initialState, action) {
     case STORE_WORKFLOWS:
       return { ...state,
         workflowTasks: action.payload,
-      }
-
-    case STORE_FILTERED_WORKFLOWS:
-      return { ...state,
-        filteredWorkflowTasks: action.payload,
       }
 
     default:

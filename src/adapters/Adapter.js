@@ -87,8 +87,8 @@ class Adapter {
     })
   }
 
-  static fetchWorkflows() {
-    return fetch(`${API}/workflows`)
+  static fetchWorkflows(clientId, projectId, workflowId) {
+    return fetch(`${API}/workflows?client=${clientId}&project=${projectId}&workflow=${workflowId}`)
     .then(resp => {
       if (resp.ok) {
         return resp.json()

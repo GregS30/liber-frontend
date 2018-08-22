@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 
 import DateFilter from "./../components/filters/DateFilter.js";
 import JobFilter from "./../components/filters/JobFilter.js";
-import UserFilter from "./../components/filters/UserFilter.js";
 import PeriodFilter from "./../components/filters/PeriodFilter.js";
 import GenericFilter from "./../components/filters/GenericFilter.js";
 
@@ -24,8 +23,13 @@ class FilterContainer extends Component {
   handleJobSelect = (event) =>
     this.props.storeJobSelect(event.target.value)
 
-  handleClientSelect = (event) =>
+  handleClientSelect = (event) => {
     this.props.storeClientSelect(event.target.value)
+    if (this.props.parent === 'workflow') {
+      this.props.storeProjectSelect('')
+      this.props.storeWorkflowSelect('')
+    }
+  }
 
   handleWorkflowSelect = (event) =>
     this.props.storeWorkflowSelect(event.target.value)
@@ -110,10 +114,11 @@ class FilterContainer extends Component {
         : null}
 
         {this.props.parent === 'task' || this.props.parent === 'analytics'
-        ? <UserFilter
-          users={this.props.users}
-          selectedUser={this.props.userFilter}
-          handleUserSelect={this.handleUserSelect} />
+        ? <GenericFilter
+          label='User'
+          items={this.props.users}
+          selectedItem={this.props.userFilter}
+          handleSelect={this.handleUserSelect} />
         : null}
 
         {this.props.parent === 'workflow'
@@ -132,9 +137,11 @@ class FilterContainer extends Component {
           handleSelect={this.handleStyleSelect} />
         : null}
 
-        {this.props.parent === 'analytics'
-        ? <button onClick={this.props.chartIt}>Chart It!</button>
-        : null}
+        {/*
+          {this.props.parent === 'analytics'
+            ? <button onClick={this.props.chartIt}>Chart It!</button>
+            : null}
+        */}
 
       </div>
     )

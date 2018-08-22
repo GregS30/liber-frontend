@@ -1,10 +1,16 @@
-import {STORE_USER, CLEAR_USER, LOGGED_IN, STORE_FILTERS, IS_FETCHING, STORE_TASKS, STORE_DATE_SELECT, STORE_USER_SELECT, STORE_PROJECT_SELECT, STORE_TASKNAME_SELECT, STORE_JOB_SELECT, STORE_STATUS_SELECT, STORE_FILTERED_TASKS, STORE_CLIENT_SELECT, STORE_WORKFLOW_SELECT, STORE_METRICS, CLEAR_STATE, STORE_STYLE_SELECT, STORE_PERIOD_SELECT, STORE_CHART_SELECT, STORE_CHART_DATASET, STORE_CHART_OBJECT, STORE_SCANNING, SET_TASK_RENDER, SET_WORKFLOW_FILTERS, STORE_FILTERED_WORKFLOWS, STORE_WORKFLOWS} from './types';
+import {STORE_USER, CLEAR_USER, LOGGED_IN, STORE_FILTERS, IS_FETCHING, IS_NOT_FETCHING, STORE_TASKS, STORE_DATE_SELECT, STORE_USER_SELECT, STORE_PROJECT_SELECT, STORE_TASKNAME_SELECT, STORE_JOB_SELECT, STORE_STATUS_SELECT, STORE_FILTERED_TASKS, STORE_CLIENT_SELECT, STORE_WORKFLOW_SELECT, STORE_METRICS, CLEAR_STATE, STORE_STYLE_SELECT, STORE_PERIOD_SELECT, STORE_CHART_SELECT, STORE_CHART_DATASET, STORE_CHART_OBJECT, STORE_SCANNING, SET_TASK_RENDER, SET_WORKFLOW_FILTERS, STORE_WORKFLOWS} from './types';
 
 import Adapter from './adapters/Adapter';
 
 export function isFetching() {
   return {
     type: IS_FETCHING,
+   }
+}
+
+export function isNotFetching() {
+  return {
+    type: IS_NOT_FETCHING,
    }
 }
 
@@ -65,10 +71,11 @@ export function storeFilters(json) {
 
 export function getFilters() {
   return (dispatch) => {
-    dispatch(isFetching)
+    dispatch(isFetching())
     Adapter.fetchFilters().then(json => {
       if (json) {
         dispatch(storeFilters(json))
+        dispatch(isNotFetching())
         console.log('getFilters() ok')
       } else {
         console.log('getFilters() failed')
@@ -98,13 +105,6 @@ export function storeWorkflows(json) {
    }
 }
 
-export function storeFilteredWorkflows(json) {
-  return {
-    type: STORE_FILTERED_WORKFLOWS,
-    payload: json
-  }
-}
-
 export function storeMetrics(metrics, scanned) {
   // console.log("storeMetrics()", metrics)
   return {
@@ -117,13 +117,14 @@ export function storeMetrics(metrics, scanned) {
 }
 
 export function getTasks(startDate) {
-  startDate = (startDate === 'Today' ? '2018-08-21' : '2017-06-15')
+  startDate = (startDate === 'Today' ? '2018-08-22' : '2017-06-15')
   return (dispatch) => {
-    dispatch(isFetching)
+    dispatch(isFetching())
     Adapter.fetchTasks(startDate).then(json => {
       if (json) {
         dispatch(storeTasks(json))
         dispatch(storeFilteredTasks(json))
+        dispatch(isNotFetching())
         console.log('getTasks() ok')
       } else {
         console.log('getTasks() failed')
@@ -231,11 +232,11 @@ export function storeChartObject(dough, bar) {
 
 export function getAnalytics(chartFilter, periodStart, periodEnd, projectId, taskId, userId) {
   return (dispatch) => {
-    dispatch(isFetching)
+    dispatch(isFetching())
     Adapter.fetchAnalytics(chartFilter, periodStart, periodEnd, projectId, taskId, userId).then(json => {
       if (json) {
         dispatch(storeChartDataset(json))
-        console.log(json)
+        dispatch(isNotFetching())
         console.log('getAnalytics() ok')
       } else {
         console.log('getAnalytics() failed')
@@ -264,14 +265,16 @@ export function setWorkflowFilters() {
   }
 }
 
-export function getWorkflows() {
+export function getWorkflows(onLoad, clientId, projectId, workflowId) {
   return (dispatch) => {
-    dispatch(isFetching)
-    Adapter.fetchWorkflows().then(json => {
+    dispatch(isFetching())
+    Adapter.fetchWorkflows(clientId, projectId, workflowId).then(json => {
       if (json) {
+        if (onLoad) {
+          dispatch(setWorkflowFilters())
+        }
         dispatch(storeWorkflows(json))
-        dispatch(storeFilteredWorkflows(json))
-        dispatch(setWorkflowFilters())
+        dispatch(isNotFetching())
         console.log('getWorkflows() ok')
       } else {
         console.log('getWorkflows() failed')
