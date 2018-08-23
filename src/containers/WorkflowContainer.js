@@ -48,7 +48,10 @@ class WorkflowContainer extends Component {
     return (
       this.props.workflowTasks.map((wt) => {
         return (
-          <WorkflowListContainer workflow={wt.workflow} taskList={wt.tasks}/>
+          <WorkflowListContainer
+            clientFilter={this.props.clientFilter}
+            workflow={wt.workflow} 
+            taskList={wt.tasks}/>
         )
       })
     )
@@ -66,7 +69,9 @@ class WorkflowContainer extends Component {
               : null
             }
           </div>
-          {this.renderWorkflowLists()}
+          <div className="workflow-lists-container">
+            {this.renderWorkflowLists()}
+          </div>
         </div>
       </Fragment>
     )

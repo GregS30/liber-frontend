@@ -1,4 +1,5 @@
-import {STORE_USER, CLEAR_USER, LOGGED_IN, STORE_FILTERS, IS_FETCHING, IS_NOT_FETCHING, STORE_TASKS, STORE_DATE_SELECT, STORE_USER_SELECT, STORE_PROJECT_SELECT, STORE_TASKNAME_SELECT, STORE_JOB_SELECT, STORE_STATUS_SELECT, STORE_FILTERED_TASKS, STORE_CLIENT_SELECT, STORE_WORKFLOW_SELECT, STORE_METRICS, CLEAR_STATE, STORE_STYLE_SELECT, STORE_PERIOD_SELECT, STORE_CHART_SELECT, STORE_CHART_DATASET, STORE_CHART_OBJECT, STORE_SCANNING, SET_TASK_RENDER, SET_WORKFLOW_FILTERS, STORE_WORKFLOWS} from './types';
+import {STORE_USER, CLEAR_USER, LOGGED_IN, STORE_FILTERS, IS_FETCHING, IS_NOT_FETCHING, STORE_TASKS, STORE_DATE_SELECT, STORE_USER_SELECT, STORE_PROJECT_SELECT, STORE_TASKNAME_SELECT, STORE_JOB_SELECT, STORE_STATUS_SELECT, STORE_FILTERED_TASKS, STORE_CLIENT_SELECT, STORE_WORKFLOW_SELECT, STORE_METRICS, CLEAR_STATE, STORE_STYLE_SELECT, STORE_PERIOD_SELECT, STORE_CHART_SELECT, STORE_CHART_DATASET, STORE_CHART_OBJECT, STORE_SCANNING, SET_WORKFLOW_FILTERS, STORE_WORKFLOWS}
+from './types';
 
 const TASK_LIST_STYLES = [
   {id: 1, name: 'default'},
@@ -64,8 +65,6 @@ const initialState = {
   taskMetrics: null,
   scanned: 0,
 
-  forceTaskRender: false,
-
   workflowTasks: [],
 
 }
@@ -127,7 +126,7 @@ export default function reducer(state = initialState, action) {
         tasks: action.payload,
         isFetching: false,
         taskNameFilter: "",
-        jobFilter: "",
+        // jobFilter: "",     // deprecated
         projectFilter: "",
         statusFilter: "",
         userFilter: "",
@@ -147,7 +146,6 @@ export default function reducer(state = initialState, action) {
       tasks: [],
       filteredTasks: [],
       workflowTasks: [],
-      filteredWorkflowTasks: [],
     }
 
     case STORE_DATE_SELECT:
@@ -193,6 +191,7 @@ export default function reducer(state = initialState, action) {
     case STORE_FILTERED_TASKS:
       return { ...state,
         filteredTasks: action.payload,
+        forceTaskRender: false,
       }
 
     case STORE_METRICS:
@@ -230,11 +229,6 @@ export default function reducer(state = initialState, action) {
       return { ...state,
         doughChart: action.payload.dough,
         barChart: action.payload.bar,
-      }
-
-    case SET_TASK_RENDER:
-      return { ...state,
-        forceTaskRender: action.payload,
       }
 
     case SET_WORKFLOW_FILTERS:

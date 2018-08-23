@@ -55,9 +55,9 @@ class ReportContainer extends Component {
 
   buildChartObject = () => {
     if (this.props.chartDataset) {
-      let labels = this.props.chartDataset.map((item) => item.name)
-      let doughData = this.props.chartDataset.map((item) => item.images)
-      let barData = this.props.chartDataset.map((item) => item.jobs)
+      let labels = this.props.chartDataset.rows.map((item) => item.name)
+      let doughData = this.props.chartDataset.rows.map((item) => item.images)
+      let barData = this.props.chartDataset.rows.map((item) => item.jobs)
 
       this.props.storeChartObject(
         {
@@ -75,7 +75,7 @@ class ReportContainer extends Component {
             data: barData,
             backgroundColor: this.getColors(labels),
           }]
-        }
+        },
       )
     }
   }
@@ -135,7 +135,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    storeChartObject: (dough, bar) => dispatch(storeChartObject(dough, bar)),
+    storeChartObject: (dough, bar, metrics) => dispatch(storeChartObject(dough, bar, metrics)),
   }
 }
 

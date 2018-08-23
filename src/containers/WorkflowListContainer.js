@@ -12,7 +12,11 @@ class WorkflowListContainer extends Component {
     return (
       <Fragment>
         <div className="workflow-task-list">
-          <h4>{this.props.workflow.project_name}</h4>
+          {this.props.clientFilter
+            ? null
+            : <h4>Client {this.props.workflow.client_id}</h4>
+          }
+          <h4>{this.props.workflow.project_name.slice(0,11)}</h4>
           <h4>({this.props.workflow.proj_code})</h4>
           {this.props.taskList.map(tl => {
             return (

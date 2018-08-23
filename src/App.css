@@ -8,6 +8,10 @@ h4 {
   margin-bottom: .4125em;
 }
 
+.task-id {
+  font-size: .75em;
+}
+
 .welcome {
   font-size: 1em;
   line-height: .25;
@@ -15,7 +19,6 @@ h4 {
   padding-right: 2em;
   padding-left: 18em;
 }
-
 
 .nav-link {
   text-decoration: none;
@@ -42,12 +45,9 @@ select {
 
 .page-header {
   width: 1060px;
+  height: 15px;
   margin-left: 1em;
   text-align: left;
-}
-
-.workflow-container {
-
 }
 
 .workflow-sidebar {
@@ -102,6 +102,15 @@ select {
   float: right;
   width: 800px;
   height: 600px;
+  overflow: scroll;
+  margin-left: 1em;
+  margin-top: 1em;
+}
+
+.workflow-lists-container {
+  float: left;
+  width: 700px;
+  height: 720px;
   overflow: scroll;
   margin-left: 1em;
   margin-top: 1em;

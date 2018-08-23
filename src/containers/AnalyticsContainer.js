@@ -5,8 +5,15 @@ import { getAnalytics } from '../actions';
 
 import FilterContainer from "./FilterContainer.js";
 import ReportContainer from "./ReportContainer.js";
+import ChartMetrics from "../components/ChartMetrics.js";
 
 class AnalyticsContainer extends Component {
+
+  componentDidMount() {
+    if (this.props.periodFilter && this.props.filtersLoaded) {
+      this.chartIt()
+    }
+  }
 
   componentDidUpdate(prevProps, prevState) {
     // console.log("componendDidUpdate")
@@ -37,6 +44,16 @@ class AnalyticsContainer extends Component {
     // if the user made no selection, then userInput is a blank string
     userInput ? filterList.find((item) => item.name === userInput).id : ''
 
+  renderChartMetrics = () => {
+    // console.log("TaskMetricsContainer render", this.props)
+    return (
+        <Fragment>
+          <h3>Metrics</h3>
+          <ChartMetrics metrics={this.props.chartDataset.totals[0]} />
+        </Fragment>
+      )
+  }
+
   render() {
     console.log("AnalyticsContainer render", this.props)
     return (
@@ -49,6 +66,9 @@ class AnalyticsContainer extends Component {
                   chartIt={this.chartIt}/>
                 : null
               }
+              {this.props.chartDataset
+                ? this.renderChartMetrics()
+                : null}
             </div>
             <ReportContainer />
           </div>
@@ -61,8 +81,6 @@ const mapStateToProps = state => {
   return {
     isFetching: state.isFetching,
     filtersLoaded: state.filtersLoaded,
-    taskMetrics: state.taskMetrics,
-
     projects: state.projects,
     taskNames: state.taskNames,
     users: state.users,
@@ -73,7 +91,7 @@ const mapStateToProps = state => {
     userFilter: state.userFilter,
     periodFilter: state.periodFilter,
     chartFilter: state.chartFilter,
-
+    chartDataset: state.chartDataset,
   }
 }
 

@@ -9,7 +9,7 @@ const WorkflowTask = (props) => {
         <table style={{background: props.item.task_color}}>
           <tbody>
             <Fragment>
-              <tr><td style={{width: C1_WIDTH}}>{props.item.task_id}</td></tr>
+              <tr><td className="task-id" style={{width: C1_WIDTH}}>{props.item.task_id}</td></tr>
               <tr><td style={{width: C1_WIDTH}}>{props.item.task_name}</td></tr>
             </Fragment>
           </tbody>

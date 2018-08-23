@@ -7,11 +7,12 @@ import FilterContainer from "./FilterContainer.js";
 import TaskListContainer from "./TaskListContainer.js";
 import TaskMetricsContainer from "./TaskMetricsContainer.js";
 
-const REFRESH_TASKS_INTERVAL = 60000
+const REFRESH_TASKS_INTERVAL = 20000
 
 class TaskContainer extends Component {
 
   componentDidMount() {
+    console.log("componentDidMount")
     this.setupInterval()
     if (this.props.dateFilter) {
       this.props.getTasks(this.props.dateFilter)
@@ -19,7 +20,7 @@ class TaskContainer extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    // console.log("componendDidUpdate")
+    console.log("componentDidUpdate")
     if (this.props.dateFilter !== prevProps.dateFilter) {
       this.props.getTasks(this.props.dateFilter)
     }
@@ -45,7 +46,7 @@ class TaskContainer extends Component {
   }
 
   render() {
-    // console.log("TaskContainer render", this.props)
+    console.log("TaskContainer render", this.props.statusFilter)
     return (
         <Fragment>
           <div className="task-container">
@@ -73,6 +74,7 @@ const mapStateToProps = state => {
     filtersLoaded: state.filtersLoaded,
     taskMetrics: state.taskMetrics,
     forceTaskRender: state.forceTaskRender,
+    statusFilter: state.statusFilter,
   }
 }
 
