@@ -1,7 +1,6 @@
 import React from 'react';
 
 const TaskMetrics = (props) => {
-
   return (
     <div className="task-metrics-container">
     {props.metrics
@@ -30,7 +29,7 @@ const TaskMetrics = (props) => {
           </tr>
           <tr>
             <td>Scanned</td>
-            <td align="right">{props.scanned}</td>
+            <td align="right">{props.scanned.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td>
           </tr>
         </tbody>
       </table>

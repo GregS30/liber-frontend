@@ -4,30 +4,17 @@ import moment from 'moment';
 
 import { storeScanned } from '../actions';
 
+import {REAL_FACTORY, UNREAL_TODAYS_DATE} from '../constants';
+
 const C1_WIDTH = '100px'
 const C2_WIDTH = '80px'
 const C2_ALIGN = 'right'
-const COLOR = ['#adebeb', '#b3e0ff', '#ccccff', '#b3ecff', '#ccddff', '#e6ccff', '#ffffb3', '#ffcce0', '#ffccff', '#ffc299', '#bbff99']
-const COLOR_STATUS_ACTIVE = '#ffff99'
-const COLOR_STATUS_CLOSED = 'silver'
-const COLOR_STATUS_HOLD = '#ff8080'
-const COLOR_STATUS_PENDING = 'white'
-const COLOR_SCAN = '#b3ccff'
-const COLOR_QA = '#e6ff99'
-
-//
-// var divStyle = {
-//   color: 'white',
-//   backgroundImage: 'url(' + imgUrl + ')',
-//   WebkitTransition: 'all', // note the capital 'W' here
-//   msTransition: 'all' // 'ms' is the only lowercase vendor prefix
-// };
-//
-// ReactDOM.render(<div style={divStyle}>Hello World!</div>, mountNode);
+const COLOR_STATUS_ACTIVE = '#e06377'
 
 class TaskListItem extends Component {
 
   renderScanner = (task, scanner, img_count) => {
+    // Return scanner name in upper-case only if task is 'scan'
     return (
       task === 'scan'
       ? <tr><td style={{width: C1_WIDTH}} >{scanner.toUpperCase()}</td><td style={{width: C2_WIDTH, align: C2_ALIGN}}></td></tr>
@@ -42,6 +29,7 @@ class TaskListItem extends Component {
   }
 
   renderTask = (task) => {
+    // Return task name only if not scan task
     return (
       task !== 'scan'
       ? <tr><td style={{width: C1_WIDTH}}>Task</td><td style={{width: C2_WIDTH, align: C2_ALIGN}}>{task}</td></tr>
@@ -60,6 +48,7 @@ class TaskListItem extends Component {
       durationString = moment.utc(duration.as('milliseconds')).format('HH:mm')
     }
 
+    // Kludge every task duration to show as at least a minute
     if (durationString === '00:00') {
       durationString = '00:01'
     }
@@ -108,9 +97,14 @@ class TaskListItem extends Component {
   }
 
   getStatus = (currentStatus, start, finish) => {
-    let status = currentStatus
-    let now = moment()
 
+    let status = currentStatus
+
+    // If running a real factory, use current date/time to determine
+    //  if a task is active; otherwise we have to kludge the current
+    //  time into our test date
+    let now = this.props.getNow()
+    
     if (start > now) {
       status = 'pending'
     }
@@ -131,25 +125,11 @@ class TaskListItem extends Component {
     switch(this.props.styleFilter) {
 
       case 'default':
-
-        if (task.task.task_name.name === 'scan') {
-          return COLOR_SCAN
+        if (taskStatus === 'active') {
+          return COLOR_STATUS_ACTIVE
         }
-        else if (task.task.task_name.name === 'qa') {
-          return COLOR_QA
-        }
-
-        switch(taskStatus) {
-          case 'active':
-            return COLOR_STATUS_ACTIVE
-          case 'closed':
-            return COLOR_STATUS_CLOSED
-          case 'hold':
-            return COLOR_STATUS_HOLD
-          case 'pending':
-            return COLOR_STATUS_PENDING
-          default:
-            return COLOR_STATUS_ACTIVE
+        else {
+          return this.props.taskNames.find((name) => name.name === task.task.task_name.name).color
         }
 
       case 'user':
@@ -162,7 +142,7 @@ class TaskListItem extends Component {
         return this.props.taskNames.find((name) => name.name === task.task.task_name.name).color
 
       default:
-        return COLOR[0];
+        return COLOR_STATUS_ACTIVE;
 
     }
   }

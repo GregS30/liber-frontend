@@ -15,7 +15,7 @@ const DEFAULT_WORKFLOW = '_prototype'
 class WorkflowContainer extends Component {
 
   componentDidMount() {
-    console.log("componendDidMount")
+    // console.log("componendDidMount")
     if (this.props.filtersLoaded) {
       this.props.getWorkflows(true,
         this.getFilterId(DEFAULT_CLIENT, this.props.clients),
@@ -50,7 +50,7 @@ class WorkflowContainer extends Component {
         return (
           <WorkflowListContainer
             clientFilter={this.props.clientFilter}
-            workflow={wt.workflow} 
+            workflow={wt.workflow}
             taskList={wt.tasks}/>
         )
       })

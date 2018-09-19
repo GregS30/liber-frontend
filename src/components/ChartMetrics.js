@@ -1,7 +1,6 @@
 import React from 'react';
 
 const ChartMetrics = (props) => {
-
   return (
     <div className="task-metrics-container">
     {props.metrics
@@ -10,15 +9,15 @@ const ChartMetrics = (props) => {
         <tbody>
           <tr>
             <td>Images</td>
-            <td align="right">{props.metrics.images}</td>
+            <td align="right">{(props.metrics.images).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td>
           </tr>
           <tr>
             <td>Jobs</td>
-            <td align="right">{props.metrics.jobs}</td>
+            <td align="right">{props.metrics.jobs.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td>
           </tr>
           <tr>
             <td>Tasks</td>
-            <td align="right">{props.metrics.tasks}</td>
+            <td align="right">{props.metrics.tasks.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td>
           </tr>
           <tr>
             <td>Scanners</td>

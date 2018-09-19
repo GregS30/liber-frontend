@@ -28,8 +28,13 @@ class AnalyticsContainer extends Component {
   }
 
   chartIt = () => {
-    console.log("ChartIt")
+    // console.log("ChartIt")
+    let start_date;
+    let end_date;
+
     let periodIndex = this.props.periods.findIndex((item) => item.name === this.props.periodFilter)
+
+    console.log(start_date, end_date)
     this.props.getAnalytics(
       this.props.chartFilter,
       this.props.periods[periodIndex].start_date,
@@ -44,18 +49,29 @@ class AnalyticsContainer extends Component {
     // if the user made no selection, then userInput is a blank string
     userInput ? filterList.find((item) => item.name === userInput).id : ''
 
+  blankChart = () =>
+    this.props.chartDataset.totals[0].jobs > 0
+    ? true
+    : false
+
   renderChartMetrics = () => {
-    // console.log("TaskMetricsContainer render", this.props)
-    return (
+    // if images is null, then there are no metrics, so don't display
+    if (!this.blankChart()) {
+      return null
+    }
+    else {
+      // console.log("TaskMetricsContainer render", this.props)
+      return (
         <Fragment>
           <h3>Metrics</h3>
           <ChartMetrics metrics={this.props.chartDataset.totals[0]} />
         </Fragment>
       )
+    }
   }
 
   render() {
-    console.log("AnalyticsContainer render", this.props)
+    // console.log("AnalyticsContainer render", this.props)
     return (
         <Fragment>
           <div className="task-container">
@@ -70,6 +86,7 @@ class AnalyticsContainer extends Component {
                 ? this.renderChartMetrics()
                 : null}
             </div>
+
             <ReportContainer />
           </div>
         </Fragment>
@@ -92,6 +109,9 @@ const mapStateToProps = state => {
     periodFilter: state.periodFilter,
     chartFilter: state.chartFilter,
     chartDataset: state.chartDataset,
+    yearsCount: state.yearsCount,
+    monthsCount: state.monthsCount,
+    quartersCount: state.quartersCount,
   }
 }
 

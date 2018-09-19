@@ -67,6 +67,10 @@ const initialState = {
 
   workflowTasks: [],
 
+  yearsCount: 0,
+  quartersCount: 0,
+  monthsCount: 0,
+
 }
 
 export default function reducer(state = initialState, action) {
@@ -223,6 +227,8 @@ export default function reducer(state = initialState, action) {
     case STORE_CHART_DATASET:
       return { ...state,
         chartDataset: action.payload,
+        yearsCount: state.yearsCount >= 3 ? 0 : state.yearsCount + 1,
+        quartersCount: state.quartersCount >= 15 ? 0 : state.quartersCount + 1,
       }
 
     case STORE_CHART_OBJECT:

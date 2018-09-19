@@ -44,8 +44,8 @@ class ReportContainer extends Component {
   }
 
   mapColors = (names, list) => {
-    console.log("names", names)
-    console.log("list", list)
+    // console.log("names", names)
+    // console.log("list", list)
     let colors = []
     names.forEach((name) =>
       colors.push(list.find((item) => item.name === name).color)
@@ -83,17 +83,17 @@ class ReportContainer extends Component {
   renderCharts() {
     return (
       <Fragment>
-        <div className="report-container-dough">
+        <div className="report-container-bar">
           <Doughnut
-            data={this.props.doughChart}
+            data={this.props.barChart}
             options={{maintainAspectRatio: false}}
             height={300}
             width={300}
           />
         </div>
-        <div className="report-container-bar">
+        <div className="report-container-dough">
           <Bar
-            data={this.props.barChart}
+            data={this.props.doughChart}
             options={{maintainAspectRatio: false}}
             height={300}
             width={300}

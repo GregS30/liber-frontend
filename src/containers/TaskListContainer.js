@@ -9,12 +9,12 @@ import { storeFilteredTasks } from '../actions';
 class TaskListContainer extends Component {
 
   componentDidMount() {
-    console.log("componentDidMount")
+    // console.log("componentDidMount")
     this.filterTasks()
   }
 
   componentDidUpdate(prevProps, prevState) {
-    console.log("componentDidUpdate")
+    // console.log("componentDidUpdate")
     if ((this.props.dateFilter !== prevProps.dateFilter)
       || (this.props.taskNameFilter !== prevProps.taskNameFilter)
       || (this.props.projectFilter !== prevProps.projectFilter)
@@ -26,15 +26,6 @@ class TaskListContainer extends Component {
     }
   }
 
-  getImagesScanned = (img_count, start, finish) => {
-    let duration = moment.duration(finish.diff(start)).as('milliseconds')
-    let elapsed = moment.duration(moment().diff(start)).as('milliseconds')
-    let imagesPerSecond = img_count/duration/1000
-    let imagesScanned = Math.round(imagesPerSecond * elapsed * 1000)
-    console.log(`duration=${duration/1000}, elapsed=${elapsed/1000}, rate=${imagesPerSecond}, scanned=${imagesScanned}`)
-    return imagesScanned
-  }
-
   filterTasks = () => {
     let filtered = this.props.tasks.filter((jt) =>
       this.filterMatch(this.props.taskNameFilter, jt.task.task_name.name)
@@ -43,7 +34,7 @@ class TaskListContainer extends Component {
         && this.filterMatch(this.props.userFilter, jt.user.username)
         && this.filterMatch(this.props.projectFilter, jt.task.workflow.project.name)
     )
-    console.log("filter tasks", filtered)
+    // console.log("filter tasks", filtered)
     this.props.storeFilteredTasks(filtered)
   }
 
@@ -82,7 +73,9 @@ class TaskListContainer extends Component {
             return (
               <TaskListItem key={jt.id} item={jt}
                statusFilter={this.props.statusFilter}
-               getImagesScanned={this.getImagesScanned} />
+               getImagesScanned={this.props.getImagesScanned}
+               getNow={this.props.getNow}
+              />
             )
           })}
         </div>

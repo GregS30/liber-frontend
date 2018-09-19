@@ -30,7 +30,7 @@ class App extends Component {
   }
 
   render() {
-   console.log("App container render()", this.props)
+   // console.log("App container render()", this.props)
     return (
       <div className="page">
         <Header username={this.props.username}

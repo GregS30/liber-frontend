@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
+import moment from 'moment';
 
 import { getTasks } from '../actions';
 
@@ -7,12 +8,14 @@ import FilterContainer from "./FilterContainer.js";
 import TaskListContainer from "./TaskListContainer.js";
 import TaskMetricsContainer from "./TaskMetricsContainer.js";
 
+import {REAL_FACTORY, UNREAL_TODAYS_DATE} from '../constants';
+
 const REFRESH_TASKS_INTERVAL = 20000
 
 class TaskContainer extends Component {
 
   componentDidMount() {
-    console.log("componentDidMount")
+    // console.log("componentDidMount")
     this.setupInterval()
     if (this.props.dateFilter) {
       this.props.getTasks(this.props.dateFilter)
@@ -20,7 +23,7 @@ class TaskContainer extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    console.log("componentDidUpdate")
+    // console.log("componentDidUpdate")
     if (this.props.dateFilter !== prevProps.dateFilter) {
       this.props.getTasks(this.props.dateFilter)
     }
@@ -45,8 +48,22 @@ class TaskContainer extends Component {
     }
   }
 
+  getImagesScanned = (img_count, start, finish) => {
+    let duration = moment.duration(finish.diff(start)).as('milliseconds')
+    let elapsed = moment.duration(this.getNow().diff(start)).as('milliseconds')
+    let imagesPerSecond = img_count/duration/1000
+    let imagesScanned = Math.round(imagesPerSecond * elapsed * 1000)
+    // console.log(`duration=${duration/1000}, elapsed=${elapsed/1000}, rate=${imagesPerSecond}, scanned=${imagesScanned}`)
+    return imagesScanned
+  }
+
+  getNow = () =>
+    REAL_FACTORY
+      ? moment()
+      : moment(UNREAL_TODAYS_DATE + "T" + moment().format("HH:mm:ss.SSSSZ"))
+
   render() {
-    console.log("TaskContainer render", this.props.statusFilter)
+    // console.log("TaskContainer render", this.props.statusFilter)
     return (
         <Fragment>
           <div className="task-container">
@@ -56,9 +73,14 @@ class TaskContainer extends Component {
                 ? <FilterContainer parent={'task'}/>
                 : null
               }
-              <TaskMetricsContainer />
+              <TaskMetricsContainer
+                getImagesScanned={this.getImagesScanned}
+              />
             </div>
-            <TaskListContainer />
+            <TaskListContainer
+              getImagesScanned={this.getImagesScanned}
+              getNow={this.getNow}
+            />
           </div>
         </Fragment>
       )

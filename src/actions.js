@@ -261,7 +261,12 @@ export function getWorkflows(onLoad, clientId, projectId, workflowId) {
 }
 
 export function getTasks(startDate) {
-  startDate = (startDate === 'Today' ? '2018-08-22' : '2017-06-15')
+  // This function is only used for the real-time tasks page.
+  //  Which is essentially a simulator.
+  //  There are only 2 possible startDate filter values: Today and Yesterday
+  //  So they are hard-coded to test dates with mock data to guarantee
+  //  a good volume of data at all times of the day.
+  startDate = (startDate === 'Today' ? '2018-09-13' : '2017-06-15')
   return (dispatch) => {
     dispatch(isFetching())
     Adapter.fetchTasks(startDate).then(json => {

@@ -37,22 +37,12 @@ class TaskMetricsContainer extends Component {
     this.props.filteredTasks.forEach((task) => {
       if (task.task.task_name.name === 'scan') {
         this.props.statusFilter === 'active'
-        ? scanned = scanned + this.getImagesScanned(task.img_count, moment(task.start_datetime), moment(task.end_datetime))
+        ? scanned = scanned + this.props.getImagesScanned(task.img_count, moment(task.start_datetime), moment(task.end_datetime))
         : scanned = scanned + task.img_count
       }
     })
     return scanned
   }
-
-  getImagesScanned = (img_count, start, finish) => {
-    let duration = moment.duration(finish.diff(start)).as('milliseconds')
-    let elapsed = moment.duration(moment().diff(start)).as('milliseconds')
-    let imagesPerSecond = img_count/duration/1000
-    let imagesScanned = Math.round(imagesPerSecond * elapsed * 1000)
-    // console.log(`duration=${duration/1000}, elapsed=${elapsed/1000}, rate=${imagesPerSecond}, scanned=${imagesScanned}`)
-    return imagesScanned
-  }
-
 
   render() {
     // console.log("TaskMetricsContainer render", this.props)
