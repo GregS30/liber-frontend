@@ -2,8 +2,6 @@ import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import moment from 'moment';
 
-import { storeScanned } from '../actions';
-
 import {REAL_FACTORY, UNREAL_TODAYS_DATE} from '../constants';
 
 const C1_WIDTH = '100px'
@@ -76,13 +74,11 @@ class TaskListItem extends Component {
 
     if (status === 'active') {
       let imagesScanned = this.props.getImagesScanned(task.img_count, start, finish)
-      // if (this.props.statusFilter === 'active') {
-      //   this.props.storeScanned(imagesScanned)
-      // }
       return (
         <Fragment>
           <tr><td style={{width: C1_WIDTH}}>Status</td><td style={{width: C2_WIDTH, align: C2_ALIGN}}>{status}</td></tr>
-          <tr><td style={{width: C1_WIDTH}}>Scanning</td><td style={{width: C2_WIDTH, align: C2_ALIGN}}>{imagesScanned}</td></tr>
+          <tr><td style={{width: C1_WIDTH}}>Duration</td><td style={{width: C2_WIDTH, align: C2_ALIGN}}>{durationString}</td></tr>
+          <tr><td style={{width: C1_WIDTH}}>Images</td><td style={{width: C2_WIDTH, align: C2_ALIGN}}>{imagesScanned}</td></tr>
         </Fragment>
       )
     }
@@ -91,7 +87,8 @@ class TaskListItem extends Component {
         <Fragment>
           <tr><td style={{width: C1_WIDTH}}>Status</td><td style={{width: C2_WIDTH, align: C2_ALIGN}}>{status}</td></tr>
           <tr><td style={{width: C1_WIDTH}}>Duration</td><td style={{width: C2_WIDTH, align: C2_ALIGN}}>{durationString}</td></tr>
-        </Fragment>
+          <tr><td style={{width: C1_WIDTH}}>Images</td><td style={{width: C2_WIDTH, align: C2_ALIGN}}>{task.img_count}</td></tr>
+       </Fragment>
       )
     }
   }
@@ -99,12 +96,8 @@ class TaskListItem extends Component {
   getStatus = (currentStatus, start, finish) => {
 
     let status = currentStatus
-
-    // If running a real factory, use current date/time to determine
-    //  if a task is active; otherwise we have to kludge the current
-    //  time into our test date
     let now = this.props.getNow()
-    
+
     if (start > now) {
       status = 'pending'
     }
@@ -125,7 +118,10 @@ class TaskListItem extends Component {
     switch(this.props.styleFilter) {
 
       case 'default':
-        if (taskStatus === 'active') {
+
+      return this.props.taskNames.find((name) => name.name === task.task.task_name.name).color
+
+      if (taskStatus === 'active') {
           return COLOR_STATUS_ACTIVE
         }
         else {
@@ -181,10 +177,4 @@ const mapStateToProps = state => {
   }
 }
 
-const mapDispatchToProps = dispatch => {
-  return {
-    storeScanned: (scannedImages) =>  dispatch(storeScanned(scannedImages)),
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(TaskListItem);
+export default connect(mapStateToProps)(TaskListItem);

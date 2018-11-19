@@ -58,6 +58,9 @@ class TaskContainer extends Component {
   }
 
   getNow = () =>
+    // If running a real factory, use current date/time to determine
+    //  if a task is active; otherwise we have to kludge the current
+    //  time into our (unreal) test date, hard-coded in db seeding
     REAL_FACTORY
       ? moment()
       : moment(UNREAL_TODAYS_DATE + "T" + moment().format("HH:mm:ss.SSSSZ"))
@@ -75,6 +78,7 @@ class TaskContainer extends Component {
               }
               <TaskMetricsContainer
                 getImagesScanned={this.getImagesScanned}
+                getNow={this.getNow}
               />
             </div>
             <TaskListContainer

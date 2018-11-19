@@ -27,14 +27,12 @@ class AnalyticsContainer extends Component {
     }
   }
 
+  getPeriodIndex = () =>
+    this.props.periods.findIndex((item) => item.name === this.props.periodFilter)
+
   chartIt = () => {
-    // console.log("ChartIt")
-    let start_date;
-    let end_date;
+    let periodIndex = this.getPeriodIndex()
 
-    let periodIndex = this.props.periods.findIndex((item) => item.name === this.props.periodFilter)
-
-    console.log(start_date, end_date)
     this.props.getAnalytics(
       this.props.chartFilter,
       this.props.periods[periodIndex].start_date,
@@ -55,6 +53,8 @@ class AnalyticsContainer extends Component {
     : false
 
   renderChartMetrics = () => {
+    let periodIndex = this.getPeriodIndex()
+
     // if images is null, then there are no metrics, so don't display
     if (!this.blankChart()) {
       return null
@@ -64,7 +64,11 @@ class AnalyticsContainer extends Component {
       return (
         <Fragment>
           <h3>Metrics</h3>
-          <ChartMetrics metrics={this.props.chartDataset.totals[0]} />
+          <ChartMetrics
+            metrics={this.props.chartDataset.totals[0]}
+            startDate={this.props.periods[periodIndex].start_date}
+            endDate={this.props.periods[periodIndex].end_date}
+          />
         </Fragment>
       )
     }
@@ -78,8 +82,7 @@ class AnalyticsContainer extends Component {
             <div className="page-header"><h2>Analytics</h2></div>
             <div className="task-sidebar">
               {this.props.filtersLoaded
-                ? <FilterContainer parent={'analytics'}
-                  chartIt={this.chartIt}/>
+                ? <FilterContainer parent={'analytics'} />
                 : null
               }
               {this.props.chartDataset

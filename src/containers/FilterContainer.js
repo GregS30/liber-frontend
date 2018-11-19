@@ -137,12 +137,6 @@ class FilterContainer extends Component {
           handleSelect={this.handleStyleSelect} />
         : null}
 
-        {/*
-          {this.props.parent === 'analytics'
-            ? <button onClick={this.props.chartIt}>Chart It!</button>
-            : null}
-        */}
-
       </div>
     )
   }

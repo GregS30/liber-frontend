@@ -8,6 +8,14 @@ const ChartMetrics = (props) => {
       <table className="task-metrics-table">
         <tbody>
           <tr>
+            <td>Period start</td>
+            <td align="right">{props.startDate}</td>
+          </tr>
+          <tr>
+            <td>Period end</td>
+            <td align="right">{props.endDate}</td>
+          </tr>          
+          <tr>
             <td>Images</td>
             <td align="right">{(props.metrics.images).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td>
           </tr>

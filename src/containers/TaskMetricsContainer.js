@@ -49,7 +49,11 @@ class TaskMetricsContainer extends Component {
     return (
         <Fragment>
           <h3>Metrics</h3>
-          <TaskMetrics metrics={this.props.taskMetrics} scanned={this.props.scanned}/>
+          <TaskMetrics
+            metrics={this.props.taskMetrics}
+            scanned={this.props.scanned}
+            getNow={this.props.getNow}
+          />
         </Fragment>
       )
   }

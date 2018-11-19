@@ -64,6 +64,13 @@ select {
   margin-top: 1em;
 }
 
+.workflow-task-head {
+  float: left;
+  height: 80px;
+  padding: .5em .5em .5em .5em;
+  overflow: scroll;
+}
+
 .workflow-task {
   float: left;
   height: 30px;
@@ -119,7 +126,7 @@ select {
 .task-item {
   float: left;
   width: 200px;
-  height: 120px;
+  height: 130px;
   padding: .5em .5em .5em .5em;
 }
 

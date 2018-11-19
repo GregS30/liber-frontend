@@ -8,6 +8,10 @@ const TaskMetrics = (props) => {
       <table className="task-metrics-table">
         <tbody>
           <tr>
+            <td>Time</td>
+            <td align="right">{props.getNow().format("hh:mm:ss")}</td>
+          </tr>
+          <tr>
             <td>Tasks</td>
             <td align="right">{props.metrics.tasks}</td>
           </tr>
