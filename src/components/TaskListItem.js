@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import moment from 'moment';
 
-import {REAL_FACTORY, UNREAL_TODAYS_DATE} from '../constants';
+// import {REAL_FACTORY, UNREAL_TODAYS_DATE} from '../constants';
 
 const C1_WIDTH = '100px'
 const C2_WIDTH = '80px'
@@ -119,14 +119,7 @@ class TaskListItem extends Component {
 
       case 'default':
 
-      return this.props.taskNames.find((name) => name.name === task.task.task_name.name).color
-
-      if (taskStatus === 'active') {
-          return COLOR_STATUS_ACTIVE
-        }
-        else {
-          return this.props.taskNames.find((name) => name.name === task.task.task_name.name).color
-        }
+        return this.props.taskNames.find((name) => name.name === task.task.task_name.name).color
 
       case 'user':
         return this.props.users.find((user) => user.name === task.user.username).color

@@ -1,5 +1,5 @@
-// export const API = 'http://localhost:3000/api/v1';
-export const API = 'https://liber-alchemy-api.herokuapp.com/api/v1';
+export const API = 'http://localhost:3000/api/v1';
+//export const API = 'https://liber-alchemy-api.herokuapp.com/api/v1';
 
 class Adapter {
 
